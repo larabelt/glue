@@ -3,7 +3,7 @@
 use Mockery as m;
 use Belt\Core\Testing;
 use Belt\Core\Http\Exceptions\ApiException;
-use Belt\Glue\Page;
+use Belt\Content\Page;
 use Belt\Glue\Tag;
 use Belt\Glue\Http\Requests\AttachTag;
 use Belt\Glue\Http\Requests\PaginateTaggables;

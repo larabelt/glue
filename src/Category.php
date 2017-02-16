@@ -7,12 +7,12 @@ use Kalnoy\Nestedset\NodeTrait;
 
 class Category extends Model implements
     Belt\Core\Behaviors\SluggableInterface,
-    Belt\Glue\Behaviors\IncludesGlueInterface
+    Belt\Content\Behaviors\IncludesContentInterface
 {
 
     use NodeTrait;
     use Belt\Core\Behaviors\Sluggable;
-    use Belt\Glue\Behaviors\IncludesGlue;
+    use Belt\Content\Behaviors\IncludesContent;
 
     protected $morphClass = 'categories';
 

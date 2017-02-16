@@ -2,7 +2,7 @@
 use Mockery as m;
 use Belt\Core\Testing;
 
-use Belt\Glue\Page;
+use Belt\Content\Page;
 use Belt\Glue\Tag;
 use Belt\Glue\Http\Requests\PaginateTaggables;
 use Illuminate\Database\Eloquent\Builder;
