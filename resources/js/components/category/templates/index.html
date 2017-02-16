@@ -1,0 +1,46 @@
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="text-right">
+            <div class="btn-group">
+                <router-link to="/categories/create" v-bind:class="'btn btn-primary'">add category</router-link>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                            <column-sorter2 :column="'categories.id'"></column-sorter2>
+                        </th>
+                        <th>
+                            Name
+                            <column-sorter2 :column="'categories.name'"></column-sorter2>
+                        </th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in table.items">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td class="text-right">
+                            <router-link :to="{ name: 'categoryEdit', params: { id: item.id } }" :class="'btn btn-xs btn-warning'">
+                                <i class="fa fa-edit"></i>
+                            </router-link>
+                            <a class="btn btn-xs btn-danger" @click="table.destroy(item.id)"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <pagination2></pagination2>
+    </div>
+</div>

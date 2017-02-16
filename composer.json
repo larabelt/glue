@@ -1,0 +1,23 @@
+{
+  "name": "larabelt/glue",
+  "description": "Glue package for LaraBelt.",
+  "authors": [
+    {
+      "name": "Matt Crowe",
+      "email": "github.mpc@zym.me"
+    },
+    {
+      "name": "Rob LaSota",
+      "email": "rob.lasota@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "larabelt/core": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Belt\\Glue\\": "src/"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+<div>
+    <heading>
+        <span slot="title">Category Editor</span>
+        <li><router-link :to="{ name: 'categoryIndex' }">Categories</router-link></li>
+    </heading>
+    <section class="glue">
+        <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#tab_1-1" data-toggle="tab" aria-expanded="false">Main</a></li>
+            </ul>
+            <div class="tab-glue">
+                <div class="tab-pane active" id="tab_1-1">
+                    <category-form></category-form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
