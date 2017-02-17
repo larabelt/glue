@@ -42,10 +42,10 @@ class BeltGlueServiceProvider extends ServiceProvider
     {
 
         // set view paths
-        $this->loadViewsFrom(resource_path('belt/glue/views'), 'belt-glue');
+        // $this->loadViewsFrom(resource_path('belt/glue/views'), 'belt-glue');
 
         // set backup view paths
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'belt-glue');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'belt-glue');
 
         // policies
         $this->registerPolicies($gate);
