@@ -28,15 +28,19 @@ Route::group([
         });
 
         # tags
-        Route::get('tags/{id}', Api\TagsController::class . '@show');
-        Route::put('tags/{id}', Api\TagsController::class . '@update');
-        Route::delete('tags/{id}', Api\TagsController::class . '@destroy');
+        Route::get('tags/{tag}', Api\TagsController::class . '@show');
+        Route::put('tags/{tag}', Api\TagsController::class . '@update');
+        Route::delete('tags/{tag}', Api\TagsController::class . '@destroy');
         Route::get('tags', Api\TagsController::class . '@index');
         Route::post('tags', Api\TagsController::class . '@store');
 
         # taggables
-        Route::group(['prefix' => 'taggables/{taggable_type}/{taggable_id}'], function () {
+        Route::group([
+            'prefix' => '{taggable_type}/{taggable_id}/tags',
+            'middleware' => 'request.injections:taggable_type,taggable_id'
+        ], function () {
             Route::get('{id}', Api\TaggablesController::class . '@show');
+            Route::put('{id}', Api\TaggablesController::class . '@update');
             Route::delete('{id}', Api\TaggablesController::class . '@destroy');
             Route::get('', Api\TaggablesController::class . '@index');
             Route::post('', Api\TaggablesController::class . '@store');

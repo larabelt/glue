@@ -3,23 +3,20 @@
 namespace Belt\Glue\Http\Controllers\Api;
 
 use Belt\Core\Http\Controllers\ApiController;
+use Belt\Core\Http\Controllers\Behaviors\Positionable;
 use Belt\Glue\Tag;
 use Belt\Glue\Http\Requests;
 use Belt\Core\Helpers\MorphHelper;
-use Illuminate\Database\Eloquent\Model;
 
 class TaggablesController extends ApiController
 {
+
+    use Positionable;
 
     /**
      * @var Tag
      */
     public $tags;
-
-    /**
-     * @var Model
-     */
-    public $taggable;
 
     /**
      * @var MorphHelper
@@ -63,13 +60,13 @@ class TaggablesController extends ApiController
 
         $request->reCapture();
 
-        $taggable = $this->taggable($taggable_type, $taggable_id);
+        $owner = $this->taggable($taggable_type, $taggable_id);
 
-        $this->authorize('view', $taggable);
+        $this->authorize('view', $owner);
 
         $request->merge([
-            'taggable_id' => $taggable->id,
-            'taggable_type' => $taggable->getMorphClass()
+            'taggable_id' => $owner->id,
+            'taggable_type' => $owner->getMorphClass()
         ]);
 
         $paginator = $this->paginator($this->tags->query(), $request);
@@ -78,7 +75,7 @@ class TaggablesController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created resource in glue.
      *
      * @param  Requests\AttachTag $request
      *
@@ -86,19 +83,44 @@ class TaggablesController extends ApiController
      */
     public function store(Requests\AttachTag $request, $taggable_type, $taggable_id)
     {
-        $taggable = $this->taggable($taggable_type, $taggable_id);
+        $owner = $this->taggable($taggable_type, $taggable_id);
 
-        $this->authorize('update', $taggable);
+        $this->authorize('update', $owner);
 
         $id = $request->get('id');
 
-        if ($taggable->tags->contains($id)) {
+        $tag = $this->tag($id);
+
+        if ($owner->tags->contains($id)) {
             $this->abort(422, ['id' => ['tag already attached']]);
         }
 
-        $taggable->tags()->attach($id);
+        $owner->tags()->attach($id);
 
-        return response()->json($this->tag($id), 201);
+        return response()->json($tag, 201);
+    }
+
+    /**
+     * Update the specified resource in glue.
+     *
+     * @param  Requests\UpdateTaggable $request
+     * @param  string $taggable_type
+     * @param  string $taggable_id
+     * @param  string $id
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Requests\UpdateTaggable $request, $taggable_type, $taggable_id, $id)
+    {
+        $owner = $this->taggable($taggable_type, $taggable_id);
+
+        $this->authorize('update', $owner);
+
+        $tag = $this->tag($id, $owner);
+
+        $this->repositionEntity($request, $id, $owner->tags, $owner->tags());
+
+        return response()->json($tag);
     }
 
     /**
@@ -110,17 +132,17 @@ class TaggablesController extends ApiController
      */
     public function show($taggable_type, $taggable_id, $id)
     {
-        $taggable = $this->taggable($taggable_type, $taggable_id);
+        $owner = $this->taggable($taggable_type, $taggable_id);
 
-        $this->authorize('view', $taggable);
+        $this->authorize('view', $owner);
 
-        $tag = $this->tag($id, $taggable);
+        $tag = $this->tag($id, $owner);
 
         return response()->json($tag);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from glue.
      *
      * @param  int $id
      *
@@ -128,15 +150,13 @@ class TaggablesController extends ApiController
      */
     public function destroy($taggable_type, $taggable_id, $id)
     {
-        $taggable = $this->taggable($taggable_type, $taggable_id);
+        $owner = $this->taggable($taggable_type, $taggable_id);
 
-        $this->authorize('update', $taggable);
+        $this->authorize('update', $owner);
 
-        if (!$taggable->tags->contains($id)) {
-            $this->abort(422, ['id' => ['tag not attached']]);
-        }
+        $this->tag($id, $owner);
 
-        $taggable->tags()->detach($id);
+        $owner->tags()->detach($id);
 
         return response()->json(null, 204);
     }

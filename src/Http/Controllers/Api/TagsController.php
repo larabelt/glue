@@ -12,7 +12,7 @@ class TagsController extends ApiController
     /**
      * @var Tag
      */
-    public $tags;
+    public $tag;
 
     /**
      * ApiController constructor.
@@ -36,7 +36,6 @@ class TagsController extends ApiController
      */
     public function index(Requests\PaginateTags $request)
     {
-
         $this->authorize('index', Tag::class);
 
         $paginator = $this->paginator($this->tags->query(), $request->reCapture());
@@ -58,7 +57,7 @@ class TagsController extends ApiController
         $input = $request->all();
 
         $tag = $this->tags->create([
-            'name' => $input['name'],
+            'name' => $request->get('name'),
         ]);
 
         $this->set($tag, $input, [
@@ -74,15 +73,13 @@ class TagsController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  Tag $tag
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-        $tag = $this->get($id);
-
-        $this->authorize('index', $tag);
+        $this->authorize('view', $tag);
 
         return response()->json($tag);
     }
@@ -91,14 +88,12 @@ class TagsController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  Requests\UpdateTag $request
-     * @param  string $id
+     * @param  Tag $tag
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Requests\UpdateTag $request, $id)
+    public function update(Requests\UpdateTag $request, Tag $tag)
     {
-        $tag = $this->get($id);
-
         $this->authorize('update', $tag);
 
         $input = $request->all();
@@ -118,14 +113,12 @@ class TagsController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Tag $tag
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        $tag = $this->get($id);
-
         $this->authorize('delete', $tag);
 
         $tag->delete();

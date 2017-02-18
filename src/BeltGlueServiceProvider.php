@@ -65,6 +65,7 @@ class BeltGlueServiceProvider extends ServiceProvider
 
         // route model binding
         $router->model('category', Belt\Glue\Category::class);
+        $router->model('tag', Belt\Glue\Tag::class);
     }
 
     /**
