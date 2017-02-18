@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
-
 use Belt\Glue\Category;
+use Illuminate\Database\Seeder;
 
 class BeltGlueCategorySeeds extends Seeder
 {
