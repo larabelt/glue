@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class BeltGlueServiceProvider
+ * @package Belt\Glue
+ */
 class BeltGlueServiceProvider extends ServiceProvider
 {
 

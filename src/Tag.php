@@ -4,6 +4,10 @@ namespace Belt\Glue;
 use Belt;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Tag
+ * @package Belt\Glue
+ */
 class Tag extends Model implements
     Belt\Core\Behaviors\SluggableInterface,
     Belt\Content\Behaviors\IncludesContentInterface
@@ -11,10 +15,19 @@ class Tag extends Model implements
     use Belt\Core\Behaviors\Sluggable;
     use Belt\Content\Behaviors\IncludesContent;
 
+    /**
+     * @var string
+     */
     protected $morphClass = 'tags';
 
+    /**
+     * @var string
+     */
     protected $table = 'tags';
 
+    /**
+     * @var array
+     */
     protected $fillable = ['name'];
 
     /**

@@ -5,6 +5,10 @@ use Belt;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
 
+/**
+ * Class Category
+ * @package Belt\Glue
+ */
 class Category extends Model implements
     Belt\Core\Behaviors\SluggableInterface,
     Belt\Content\Behaviors\IncludesContentInterface
@@ -14,14 +18,30 @@ class Category extends Model implements
     use Belt\Core\Behaviors\Sluggable;
     use Belt\Content\Behaviors\IncludesContent;
 
+    /**
+     * @var string
+     */
     protected $morphClass = 'categories';
 
+    /**
+     * @var string
+     */
     protected $table = 'categories';
 
+    /**
+     * @var array
+     */
     protected $fillable = ['name', 'body'];
 
+    /**
+     * @var array
+     */
     protected $appends = ['full_name'];
 
+    /**
+     * @param string $glue
+     * @return string
+     */
     public function getFullName($glue = ' > ')
     {
         $names = $this->getAncestors()->pluck('name')->all();
@@ -30,6 +50,9 @@ class Category extends Model implements
         return implode($glue, $names);
     }
 
+    /**
+     * @return string
+     */
     public function getFullNameAttribute()
     {
         return $this->getFullName();

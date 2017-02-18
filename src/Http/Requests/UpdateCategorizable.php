@@ -3,9 +3,16 @@ namespace Belt\Glue\Http\Requests;
 
 use Belt\Core\Http\Requests\FormRequest;
 
+/**
+ * Class UpdateCategorizable
+ * @package Belt\Glue\Http\Requests
+ */
 class UpdateCategorizable extends FormRequest
 {
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [

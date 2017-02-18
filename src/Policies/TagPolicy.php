@@ -6,6 +6,10 @@ use Belt\Core\User;
 use Belt\Core\Policies\BaseAdminPolicy;
 use Belt\Glue\Tag;
 
+/**
+ * Class TagPolicy
+ * @package Belt\Glue\Policies
+ */
 class TagPolicy extends BaseAdminPolicy
 {
     /**

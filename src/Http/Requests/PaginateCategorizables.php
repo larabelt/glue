@@ -4,10 +4,20 @@ namespace Belt\Glue\Http\Requests;
 use Belt\Glue\Category;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Class PaginateCategorizables
+ * @package Belt\Glue\Http\Requests
+ */
 class PaginateCategorizables extends PaginateCategories
 {
+    /**
+     * @var int
+     */
     public $perPage = 10;
 
+    /**
+     * @var string
+     */
     public $orderBy = 'categories._lft';
 
     /**

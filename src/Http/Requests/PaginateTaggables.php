@@ -4,14 +4,24 @@ namespace Belt\Glue\Http\Requests;
 use Belt\Glue\Tag;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Class PaginateTaggables
+ * @package Belt\Glue\Http\Requests
+ */
 class PaginateTaggables extends PaginateTags
 {
+    /**
+     * @var int
+     */
     public $perPage = 5;
     /**
      * @var Tag
      */
     public $tags;
 
+    /**
+     * @return Tag
+     */
     public function tags()
     {
         return $this->tags ?: $this->tags = new Tag();

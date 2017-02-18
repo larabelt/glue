@@ -6,6 +6,10 @@ use Belt\Core\User;
 use Belt\Core\Policies\BaseAdminPolicy;
 use Belt\Glue\Category;
 
+/**
+ * Class CategoryPolicy
+ * @package Belt\Glue\Policies
+ */
 class CategoryPolicy extends BaseAdminPolicy
 {
     /**
