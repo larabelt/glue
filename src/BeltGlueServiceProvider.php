@@ -66,6 +66,10 @@ class BeltGlueServiceProvider extends ServiceProvider
         // route model binding
         $router->model('category', Belt\Glue\Category::class);
         $router->model('tag', Belt\Glue\Tag::class);
+
+        # beltable values for global belt command
+        $this->app['belt']->publish('belt-glue:publish');
+        $this->app['belt']->seeders('BeltGlueSeeder');
     }
 
     /**
