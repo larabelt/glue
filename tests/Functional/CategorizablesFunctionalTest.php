@@ -19,6 +19,7 @@ class CategorizablesFunctionalTest extends Testing\BeltTestCase
             'id' => 1
         ]);
         $response->assertStatus(201);
+        $response->assertJsonFragment(['id']);
         $response = $this->json('GET', "/api/v1/pages/1/categories/1");
         $response->assertStatus(200);
         $response = $this->json('POST', '/api/v1/pages/1/categories', [
