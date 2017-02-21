@@ -1,22 +1,25 @@
-import headingTemplate from 'belt/core/js/templates/heading2.html';
-import indexTemplate from './templates/index.html';
-import CategoryTable from './table';
+// helpers
+import Table from '../table';
+
+// templates make a change
+import heading_html from 'belt/core/js/templates/heading.html';
+import index_html from '../templates/index.html';
 
 export default {
 
     components: {
-        heading: {template: headingTemplate},
-        categoryIndex: {
+        heading: {template: heading_html},
+        index: {
             data() {
                 return {
-                    table: new CategoryTable({router: this.$router}),
+                    table: new Table({router: this.$router}),
                 }
             },
             mounted() {
                 this.table.updateQueryFromRouter();
                 this.table.index();
             },
-            template: indexTemplate,
+            template: index_html,
         },
     },
 
@@ -25,8 +28,8 @@ export default {
             <heading>
                 <span slot="title">Category Manager</span>
             </heading>
-            <section class="glue">
-                <category-index></category-index>
+            <section class="content">
+                <index></index>
             </section>
         </div>
         `

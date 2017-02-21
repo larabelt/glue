@@ -1,0 +1,59 @@
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="clearfix">
+            <div class="pull-left">
+                <div class="form-group">
+                    <input
+                            type="text"
+                            class="form-control"
+                            v-model="table.query.q"
+                            placeholder="filter"
+                            @keydown="table.index()"
+                    >
+                </div>
+            </div>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <router-link :to="{ name: 'categories.create' }" :class="'btn btn-primary'">add category</router-link>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                            <column-sorter :column="'categories.id'"></column-sorter>
+                        </th>
+                        <th>
+                            Name
+                            <column-sorter :column="'categories.name'"></column-sorter>
+                        </th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in table.items">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td class="text-right">
+                            <router-link :to="{ name: 'categories.edit', params: { id: item.id } }" :class="'btn btn-xs btn-warning'">
+                                <i class="fa fa-edit"></i>
+                            </router-link>
+                            <a class="btn btn-xs btn-danger" @click="table.destroy(item.id)"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <pagination></pagination>
+    </div>
+</div>

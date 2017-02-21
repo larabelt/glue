@@ -1,0 +1,47 @@
+<form role="form" @submit.prevent="form.submit()" @keydown="form.errors.clear($event.target.name)">
+    <div class="checkbox">
+        <label>
+            <input type="checkbox"
+                   v-model="form.is_active"
+                   :true-value="1"
+                   :false-value="0"
+            > Is Active
+        </label>
+    </div>
+    <div class="form-group" :class="{ 'has-error': form.error('name') }">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" v-model="form.name" placeholder="name">
+        <span v-for="error in form.error('name')" class="text-danger">{{ error }}</span>
+    </div>
+    <div v-if="form.id" class="form-group" :class="{ 'has-error': form.error('slug') }">
+        <label for="slug">Slug</label>
+        <input type="text" class="form-control" v-model="form.slug" placeholder="slug">
+        <span v-for="error in form.error('slug')" class="text-danger">{{ error }}</span>
+    </div>
+    <div class="form-group" :class="{ 'has-error': form.error('body') }">
+        <label for="body">Body</label>
+        <textarea class="form-control" rows="10" v-model="form.body" tinymce="'body'"></textarea>
+        <span v-for="error in form.error('body')" class="text-danger">{{ error }}</span>
+    </div>
+    <div class="form-group" :class="{ 'has-error': form.error('meta_title') }">
+        <label for="meta_title">Meta Title</label>
+        <input type="text" class="form-control" v-model="form.meta_title" placeholder="meta title">
+        <span v-for="error in form.error('meta_title')" class="text-danger">{{ error }}</span>
+    </div>
+    <div class="form-group" :class="{ 'has-error': form.error('meta_description') }">
+        <label for="meta_description">Meta Description</label>
+        <textarea class="form-control" rows="10" v-model="form.meta_description"></textarea>
+        <span v-for="error in form.error('meta_description')" class="text-danger">{{ error }}</span>
+    </div>
+    <div class="form-group" :class="{ 'has-error': form.error('meta_keywords') }">
+        <label for="meta_keywords">Meta Keywords</label>
+        <textarea class="form-control" rows="10" v-model="form.meta_keywords"></textarea>
+        <span v-for="error in form.error('meta_keywords')" class="text-danger">{{ error }}</span>
+    </div>
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary" :disabled="form.errors.any()">
+            <span v-if="form.saving"><i class="fa fa-spinner fa-pulse fa-fw"></i></span>
+            <span v-else>Save</span>
+        </button>
+    </div>
+</form>

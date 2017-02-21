@@ -1,18 +1,12 @@
 import BaseForm from 'belt/core/js/helpers/form';
 import BaseService from 'belt/core/js/helpers/service';
 
-class CategoryForm extends BaseForm {
+class TagForm extends BaseForm {
 
-
-    /**
-     * Create a new Form instance.
-     *
-     * @param {object} options
-     */
     constructor(options = {}) {
         super(options);
-        this.service = new BaseService({baseUrl: '/api/v1/categories/'});
-        this.routeEditName = 'categoryEdit';
+        this.service = new BaseService({baseUrl: '/api/v1/tags/'});
+        this.routeEditName = 'tags.edit';
         this.setData({
             id: '',
             name: '',
@@ -23,4 +17,4 @@ class CategoryForm extends BaseForm {
 
 }
 
-export default CategoryForm;
+export default TagForm;
