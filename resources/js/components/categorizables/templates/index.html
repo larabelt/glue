@@ -17,22 +17,27 @@
         </table>
     </div>
     <div class="col-md-12">
-       <table class="table table-bordered table-hover">
-            <thead>
+        <div v-if="table.items.length">
+            <table class="table table-bordered table-hover">
+                <thead>
                 <tr>
                     <th>Name</th>
                     <th class="text-right">Actions</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr v-for="category in table.items">
                     <td>{{ category.full_name }}</td>
                     <td class="text-right">
                         <a class="btn btn-xs btn-danger" @click="table.destroy(category.id)"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <pagination></pagination>
+                </tbody>
+            </table>
+            <pagination></pagination>
+        </div>
+        <div v-else>
+            <p>There are no categories for this item.</p>
+        </div>
     </div>
 </div>

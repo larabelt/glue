@@ -17,22 +17,27 @@
         </table>
     </div>
     <div class="col-md-12">
-       <table class="table table-bordered table-hover">
-            <thead>
+        <div v-if="table.items.length">
+            <table class="table table-bordered table-hover">
+                <thead>
                 <tr>
                     <th>Name</th>
                     <th class="text-right">Actions</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr v-for="tag in table.items">
                     <td>{{ tag.name }}</td>
                     <td class="text-right">
                         <a class="btn btn-xs btn-danger" @click="table.destroy(tag.id)"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
-            </tbody>
-        </table>
-        <pagination></pagination>
+                </tbody>
+            </table>
+            <pagination></pagination>
+        </div>
+        <div v-else>
+            <p>There are no tags for this item.</p>
+        </div>
     </div>
 </div>
