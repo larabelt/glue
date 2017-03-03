@@ -23,11 +23,6 @@ class CategoriesController extends ApiController
         $this->categories = $category;
     }
 
-    public function get($id)
-    {
-        return $this->categories->find($id) ?: $this->abort(404);
-    }
-
     /**
      * Display a listing of the resource.
      *

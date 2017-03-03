@@ -101,29 +101,6 @@ class TaggablesController extends ApiController
     }
 
     /**
-     * Update the specified resource in glue.
-     *
-     * @param  Requests\UpdateTaggable $request
-     * @param  string $taggable_type
-     * @param  string $taggable_id
-     * @param  string $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Requests\UpdateTaggable $request, $taggable_type, $taggable_id, $id)
-    {
-        $owner = $this->taggable($taggable_type, $taggable_id);
-
-        $this->authorize('update', $owner);
-
-        $tag = $this->tag($id, $owner);
-
-        $this->repositionEntity($request, $id, $owner->tags, $owner->tags());
-
-        return response()->json($tag);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int $id

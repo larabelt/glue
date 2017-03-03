@@ -101,29 +101,6 @@ class CategorizablesController extends ApiController
     }
 
     /**
-     * Update the specified resource in glue.
-     *
-     * @param  Requests\UpdateCategorizable $request
-     * @param  string $categorizable_type
-     * @param  string $categorizable_id
-     * @param  string $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Requests\UpdateCategorizable $request, $categorizable_type, $categorizable_id, $id)
-    {
-        $owner = $this->categorizable($categorizable_type, $categorizable_id);
-
-        $this->authorize('update', $owner);
-
-        $category = $this->category($id, $owner);
-
-        $this->repositionEntity($request, $id, $owner->categories, $owner->categories());
-
-        return response()->json($category);
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  int $id

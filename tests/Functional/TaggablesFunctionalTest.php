@@ -22,6 +22,10 @@ class TaggablesFunctionalTest extends Testing\BeltTestCase
         $response->assertJsonFragment(['id']);
         $response = $this->json('GET', "/api/v1/pages/1/tags/1");
         $response->assertStatus(200);
+        $response = $this->json('POST', '/api/v1/pages/1/tags', [
+            'id' => 1
+        ]);
+        $response->assertStatus(422);
 
         # show
         $response = $this->json('GET', "/api/v1/pages/1/tags/1");
