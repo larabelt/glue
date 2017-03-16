@@ -12,7 +12,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'belt-glue:publish {--force} {--path=}';
+    protected $signature = 'belt-glue:publish {action=publish} {--force} {--path=}';
 
     /**
      * The console command description.
