@@ -1,13 +1,15 @@
 <div>
     <heading>
         <span slot="title">Category Editor</span>
+        <span slot="subtitle">{{ form.name }}</span>
         <li><router-link :to="{ name: 'categories' }">Categories</router-link></li>
     </heading>
-    <section class="content">
-        <div class="nav-tabs-custom">
-            <div class="tab-content">
-                <edit></edit>
-            </div>
+    <div class="nav-tabs-custom nav-tabs-standalone">
+        <tabs></tabs>
+    </div>
+    <div class="box">
+        <div class="box-body">
+            <tab></tab>
         </div>
-    </section>
+    </div>
 </div>

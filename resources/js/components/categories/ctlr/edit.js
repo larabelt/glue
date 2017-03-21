@@ -1,3 +1,4 @@
+import shared from './shared';
 
 // helpers
 import Form from '../form';
@@ -8,18 +9,12 @@ import edit_html from '../templates/edit.html';
 import form_html from '../templates/form.html';
 
 export default {
-    data() {
-        return {
-            morphable_type: 'categories',
-            morphable_id: this.$route.params.id,
-        }
-    },
+    mixins: [shared],
     components: {
-        heading: {template: heading_html},
-        edit: {
+        tab: {
             data() {
                 return {
-                    form: new Form(),
+                    form: this.$parent.form,
                 }
             },
             mounted() {

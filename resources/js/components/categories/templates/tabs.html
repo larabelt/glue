@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs pull-right">
+    <li :class="{active: $router.currentRoute.name == 'categories.edit'}">
+        <router-link :to="{ name: 'categories.edit', params: {id: $route.params.id}}">Main</router-link>
+    </li>
+    <li :class="{active: $router.currentRoute.name == 'categories.sections'}">
+        <router-link :to="{ name: 'categories.sections', params: {id: $route.params.id}}">Sections</router-link>
+    </li>
+</ul>
