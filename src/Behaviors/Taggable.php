@@ -8,11 +8,17 @@ use Belt\Glue\Tag;
 trait Taggable
 {
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+     */
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
+    /**
+     *
+     */
     public function purgeTags()
     {
         DB::connection($this->getConnectionName())
@@ -31,9 +37,9 @@ trait Taggable
      */
     public function scopeHasTag($query, $tag)
     {
-        $query->whereHas('tags', function ($subQB) use ($tag) {
+        $query->whereHas('tags', function ($query) use ($tag) {
             $column = is_numeric($tag) ? 'id' : 'slug';
-            $subQB->where($column, $tag);
+            $query->where('tags.' . $column, $tag);
         });
 
         return $query;

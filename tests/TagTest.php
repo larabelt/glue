@@ -1,6 +1,6 @@
 <?php
-use Mockery as m;
 
+use Mockery as m;
 use Belt\Core\Testing\BeltTestCase;
 use Belt\Glue\Tag;
 use Illuminate\Database\Eloquent\Builder;
