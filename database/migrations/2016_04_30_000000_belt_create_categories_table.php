@@ -16,6 +16,7 @@ class BeltCreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             NestedSet::columns($table);
+            $table->string('template')->default('default');
             $table->string('name');
             $table->string('slug')->index();
             $table->text('body')->nullable();
