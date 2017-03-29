@@ -5,4 +5,7 @@
     <li :class="{active: $router.currentRoute.name == 'categories.sections'}">
         <router-link :to="{ name: 'categories.sections', params: {id: $route.params.id}}">Sections</router-link>
     </li>
+    <li :class="{active: $router.currentRoute.name == 'categories.attachments'}">
+        <router-link :to="{ name: 'categories.attachments', params: {id: $route.params.id}}">Attachments</router-link>
+    </li>
 </ul>

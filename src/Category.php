@@ -10,11 +10,14 @@ use Kalnoy\Nestedset\NodeTrait;
  * @package Belt\Glue
  */
 class Category extends Model implements
+    Belt\Clip\Behaviors\ClippableInterface,
     Belt\Core\Behaviors\SluggableInterface,
     Belt\Content\Behaviors\IncludesContentInterface
 {
 
     use NodeTrait;
+    use Belt\Clip\Behaviors\Clippable;
+    use Belt\Core\Behaviors\HasSortableTrait;
     use Belt\Core\Behaviors\Sluggable;
     use Belt\Content\Behaviors\IncludesContent;
 
