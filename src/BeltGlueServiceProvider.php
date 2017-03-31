@@ -64,8 +64,12 @@ class BeltGlueServiceProvider extends ServiceProvider
         $this->commands(Belt\Glue\Commands\PublishCommand::class);
 
         // route model binding
-        $router->model('category', Belt\Glue\Category::class);
-        $router->model('tag', Belt\Glue\Tag::class);
+        $router->model('category', Belt\Glue\Category::class, function ($value) {
+            return Belt\Glue\Category::sluggish($value)->first();
+        });
+        $router->model('tag', Belt\Glue\Tag::class, function ($value) {
+            return Belt\Glue\Tag::sluggish($value)->first();
+        });
 
         # beltable values for global belt command
         $this->app['belt']->publish('belt-glue:publish');

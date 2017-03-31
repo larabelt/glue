@@ -30,33 +30,34 @@ class Category extends Model implements
      * @var string
      */
     protected
-    $morphClass = 'categories';
+        $morphClass = 'categories';
 
     /**
      * @var string
      */
     protected
-    $table = 'categories';
+        $table = 'categories';
 
     /**
      * @var array
      */
     protected
-    $fillable = ['name', 'body'];
+        $fillable = ['name', 'body'];
 
     /**
      * @var array
      */
     protected
-    $appends = ['full_name'];
+        $appends = ['full_name'];
 
     /**
      * @param string $glue
      * @return string
      */
     public
-    function getFullName($glue = ' > ')
-    {
+    function getFullName(
+        $glue = ' > '
+    ) {
         $names = $this->getAncestors()->pluck('name')->all();
         $names[] = $this->name;
 
@@ -81,8 +82,11 @@ class Category extends Model implements
      * @return mixed
      */
     public
-    function scopeCategoried($query, $categorizable_type, $categorizable_id)
-    {
+    function scopeCategoried(
+        $query,
+        $categorizable_type,
+        $categorizable_id
+    ) {
         $query->select(['categories.*']);
         $query->join('categorizables', 'categorizables.category_id', '=', 'categories.id');
         $query->where('categorizables.categorizable_type', $categorizable_type);
@@ -101,8 +105,11 @@ class Category extends Model implements
      * @return mixed
      */
     public
-    function scopeNotCategoried($query, $categorizable_type, $categorizable_id)
-    {
+    function scopeNotCategoried(
+        $query,
+        $categorizable_type,
+        $categorizable_id
+    ) {
         $query->select(['categories.*']);
         $query->leftJoin('categorizables', function ($subQB) use ($categorizable_type, $categorizable_id) {
             $subQB->on('categorizables.category_id', '=', 'categories.id');
