@@ -48,7 +48,7 @@ class Category extends Model implements
      * @var array
      */
     protected
-        $appends = ['full_name'];
+        $appends = ['full_name', 'url'];
 
     /**
      * @param string $glue
@@ -119,6 +119,21 @@ class Category extends Model implements
         $query->whereNull('categorizables.id');
 
         return $query;
+    }
+
+    public function getUrlAttribute() {
+        $url = [$this->slug];
+        $ancestors = $this->ancestors()->get();
+
+        if( $ancestors->count() ) {
+            foreach ($ancestors as $ancestor) {
+                array_unshift($url, $ancestor->slug);
+            }
+        }
+
+        array_unshift($url, '/categories');
+
+        return implode('/',$url);
     }
 
 }
