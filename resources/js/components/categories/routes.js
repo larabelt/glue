@@ -9,5 +9,5 @@ export default [
     {path: '/categories/create', component: create, name: 'categories.create'},
     {path: '/categories/edit/:id', component: edit, name: 'categories.edit'},
     {path: '/categories/edit/:id/attachments', component: attachments, name: 'categories.attachments'},
-    {path: '/categories/edit/:id/sections', component: sections, name: 'categories.sections'},
+    {path: '/categories/edit/:id/sections/:section?', component: sections, name: 'categories.sections'},
 ]
