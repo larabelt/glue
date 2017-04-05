@@ -1,7 +1,9 @@
 <?php
+
 namespace Belt\Glue\Http\Requests;
 
 use Belt\Glue\Tag;
+use Belt\Core\Http\Requests\PaginateRequest;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -51,6 +53,20 @@ class PaginateTaggables extends PaginateTags
     public function items(Builder $query)
     {
         return $query->get();
+    }
+
+    /**
+     * @param PaginateRequest $request
+     * @param $query
+     * @return mixed
+     */
+    public static function scopeHasTag(PaginateRequest $request, $query)
+    {
+        if ($tag_id = $request->get('tag_id')) {
+            $query->hasTag($tag_id);
+        }
+
+        return $query;
     }
 
 }

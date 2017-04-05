@@ -38,8 +38,12 @@ trait Taggable
     public function scopeHasTag($query, $tag)
     {
         $query->whereHas('tags', function ($query) use ($tag) {
-            $column = is_numeric($tag) ? 'id' : 'slug';
-            $query->where('tags.' . $column, $tag);
+            $tags = is_array($tag) ? $tag : explode(',', $tag);
+            foreach ($tags as $n => $tag) {
+                $column = is_numeric($tag) ? 'id' : 'slug';
+                $method = $n === 0 ? 'where' : 'orWhere';
+                $query->$method('tags.' . $column, $tag);
+            }
         });
 
         return $query;
