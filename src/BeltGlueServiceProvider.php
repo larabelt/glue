@@ -44,6 +44,8 @@ class BeltGlueServiceProvider extends ServiceProvider
      */
     public function boot(GateContract $gate, Router $router)
     {
+        //observers
+        Category::observe(Belt\Glue\Observers\CategoryObserver::class);
 
         // set view paths
         // $this->loadViewsFrom(resource_path('belt/glue/views'), 'belt-glue');

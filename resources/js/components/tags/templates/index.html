@@ -41,7 +41,7 @@
                             <router-link :to="{ name: 'tags.edit', params: { id: item.id } }" :class="'btn btn-xs btn-warning'">
                                 <i class="fa fa-edit"></i>
                             </router-link>
-                            <a class="btn btn-xs btn-danger" @click="table.destroy(item.id)"><i class="fa fa-trash"></i></a>
+                            <modal-delete :item-id="item.id" _class="''" :callingObject="table"><i class="fa fa-trash"></i> Remove</modal-delete>
                         </td>
                     </tr>
                 </tbody>
