@@ -3,6 +3,7 @@
 namespace Belt\Glue\Observers;
 
 use Belt\Glue\Category;
+use Illuminate\Support\Facades\DB;
 
 class CategoryObserver
 {
@@ -19,5 +20,7 @@ class CategoryObserver
         foreach($category->sections as $section) {
             $section->delete();
         }
+
+        DB::table('categorizables')->where('category_id', $category->id)->delete();
     }
 }
