@@ -36,7 +36,7 @@
                 <tbody>
                     <tr v-for="item in table.items">
                         <td>{{ item.id }}</td>
-                        <td>{{ item.name }}</td>
+                        <td v-html="parentCheck(item)"></td>
                         <td class="text-right">
                             <router-link :to="{ name: 'categories.edit', params: { id: item.id } }" :class="'btn btn-xs btn-warning'">
                                 <i class="fa fa-edit"></i>

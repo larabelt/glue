@@ -15,6 +15,21 @@ export default {
                     table: new Table({router: this.$router}),
                 }
             },
+            methods: {
+                parentCheck(category) {
+                    let output = `<b>${category.name}</b>`;
+
+                    if( category.id != null ) {
+                        _.each(this.table.items, item => {
+                            if (item.id == category.parent_id) {
+                                output = `(${item.id})${item.name} > <b>${category.name} </b>`;
+                            }
+                        });
+                    }
+                    
+                    return output;
+                }
+            },
             mounted() {
                 this.table.updateQueryFromRouter();
                 this.table.index();
