@@ -48,14 +48,6 @@ class PaginateTaggables extends PaginateTags
     }
 
     /**
-     * @inheritdoc
-     */
-    public function items(Builder $query)
-    {
-        return $query->get();
-    }
-
-    /**
      * @param PaginateRequest $request
      * @param $query
      * @return mixed

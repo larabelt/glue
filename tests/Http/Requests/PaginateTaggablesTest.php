@@ -1,7 +1,7 @@
 <?php
 use Mockery as m;
 use Belt\Core\Testing;
-
+use Belt\Core\Http\Requests\PaginateRequest;
 use Belt\Content\Page;
 use Belt\Glue\Tag;
 use Belt\Glue\Http\Requests\PaginateTaggables;
@@ -21,7 +21,7 @@ class PaginateTaggablesTest extends Testing\BeltTestCase
     /**
      * @covers \Belt\Glue\Http\Requests\PaginateTaggables::modifyQuery
      * @covers \Belt\Glue\Http\Requests\PaginateTaggables::tags
-     * @covers \Belt\Glue\Http\Requests\PaginateTaggables::items
+     * @covers \Belt\Glue\Http\Requests\PaginateTaggables::scopeHasTag
      */
     public function test()
     {
@@ -49,8 +49,12 @@ class PaginateTaggablesTest extends Testing\BeltTestCase
         $paginateRequest->tags();
         $this->assertInstanceOf(Tag::class, $paginateRequest->tags);
 
-        # items
-        $paginateRequest->items($qbMock);
+//        # scopeHasTag
+//        $query = m::mock(Builder::class);
+//        $query->shouldReceive('hasTag')->once()->with(1);
+//        $request = m::mock(PaginateRequest::class);
+//        $request->shouldReceive('get')->once()->with('tag_id')->andReturn(1);
+//        $paginateRequest->scopeHasTag($request, $query);
     }
 
 }
