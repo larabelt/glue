@@ -36,7 +36,6 @@ class PaginateTaggablesTest extends Testing\BeltTestCase
         $qbMock = m::mock(Builder::class);
         $qbMock->shouldReceive('tagged')->once()->with('pages', 1);
         $qbMock->shouldReceive('notTagged')->once()->with('pages', 1);
-        $qbMock->shouldReceive('get')->once()->andReturn(new Collection([$tag1]));
 
         # modifyQuery
         $paginateRequest = new PaginateTaggables(['taggable_id' => 1, 'taggable_type' => 'pages']);
@@ -49,12 +48,12 @@ class PaginateTaggablesTest extends Testing\BeltTestCase
         $paginateRequest->tags();
         $this->assertInstanceOf(Tag::class, $paginateRequest->tags);
 
-//        # scopeHasTag
-//        $query = m::mock(Builder::class);
-//        $query->shouldReceive('hasTag')->once()->with(1);
-//        $request = m::mock(PaginateRequest::class);
-//        $request->shouldReceive('get')->once()->with('tag_id')->andReturn(1);
-//        $paginateRequest->scopeHasTag($request, $query);
+        # scopeHasTag
+        $query = m::mock(Builder::class);
+        $query->shouldReceive('hasTag')->once()->with(1);
+        $request = m::mock(PaginateRequest::class);
+        $request->shouldReceive('get')->once()->with('tag_id')->andReturn(1);
+        $paginateRequest->scopeHasTag($request, $query);
     }
 
 }
