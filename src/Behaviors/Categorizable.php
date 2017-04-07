@@ -21,4 +21,25 @@ trait Categorizable
             ->delete();
     }
 
+    /**
+     * Return items associated with the given category
+     *
+     * @param $query
+     * @param $category
+     * @return mixed
+     */
+    public function scopeHasCategory($query, $category)
+    {
+        $query->whereHas('categories', function ($query) use ($category) {
+            $categories = is_array($category) ? $category : explode(',', $category);
+            foreach ($categories as $n => $category) {
+                $column = is_numeric($category) ? 'id' : 'slug';
+                $method = $n === 0 ? 'where' : 'orWhere';
+                $query->$method('categories.' . $column, $category);
+            }
+        });
+
+        return $query;
+    }
+
 }

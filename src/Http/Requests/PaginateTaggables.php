@@ -2,8 +2,8 @@
 
 namespace Belt\Glue\Http\Requests;
 
-use Belt\Glue\Tag;
 use Belt\Core\Http\Requests\PaginateRequest;
+use Belt\Glue\Tag;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
