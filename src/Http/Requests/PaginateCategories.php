@@ -32,6 +32,7 @@ class PaginateCategories extends PaginateRequest
      */
     public $searchable = [
         'categories.name',
+        'categories.searchable',
     ];
 
 }
