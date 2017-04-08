@@ -63,6 +63,9 @@ class CategoriesController extends ApiController
             'header',
             'body',
             'footer',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
         ]);
 
         $category->save();
@@ -103,6 +106,9 @@ class CategoriesController extends ApiController
             'name',
             'slug',
             'body',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
         ]);
 
         $category->save();
