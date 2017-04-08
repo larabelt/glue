@@ -9,6 +9,7 @@ class CategoryForm extends BaseForm {
         this.routeEditName = 'categories.edit';
         this.setData({
             id: '',
+            is_active: 0,
             name: '',
             slug: '',
             body: '',
