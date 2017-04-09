@@ -2,6 +2,9 @@
 namespace Belt\Glue\Http\Requests;
 
 use Belt\Core\Http\Requests\PaginateRequest;
+use Belt\Glue\Http\Requests\PaginateCategorizables;
+use Belt\Glue\Http\Requests\PaginateTaggables;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class PaginateCategories
@@ -34,5 +37,6 @@ class PaginateCategories extends PaginateRequest
         'categories.name',
         'categories.searchable',
     ];
+
 
 }
