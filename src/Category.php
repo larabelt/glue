@@ -47,8 +47,7 @@ class Category extends Model implements
     /**
      * @var array
      */
-    protected
-        $appends = ['full_name', 'url', 'image'];
+    protected $appends = ['full_name', 'default_url', 'url', 'image'];
 
     /**
      * @param string $glue
@@ -121,7 +120,7 @@ class Category extends Model implements
         return $query;
     }
 
-    public function getUrlAttribute() {
+    public function getDefaultUrlAttribute() {
         $url = [$this->slug];
         $ancestors = $this->ancestors()->get();
 
@@ -134,6 +133,10 @@ class Category extends Model implements
         array_unshift($url, '/categories');
 
         return implode('/',$url);
+    }
+
+    public function getUrlAttribute() {
+        $this->getDefaultUrlAttribute();
     }
 
 }
