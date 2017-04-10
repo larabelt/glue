@@ -38,5 +38,14 @@ class PaginateCategories extends PaginateRequest
         'categories.searchable',
     ];
 
+    public function modifyQuery(Builder $query)
+    {
+        if ($is_active = $this->get('is_active')) {
+            $query->where('is_active', $is_active);
+        }
+
+        return $query;
+    }
+
 
 }
