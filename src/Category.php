@@ -132,7 +132,7 @@ class Category extends Model implements
             }
         }
 
-        array_unshift($url, '/categories');
+        array_unshift($url, 'categories');
 
         return implode('/',$url);
     }
