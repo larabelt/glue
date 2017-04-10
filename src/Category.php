@@ -13,15 +13,17 @@ use Kalnoy\Nestedset\NodeTrait;
 class Category extends Model implements
     Belt\Clip\Behaviors\ClippableInterface,
     Belt\Core\Behaviors\SluggableInterface,
+    Belt\Core\Behaviors\TypeInterface,
     Belt\Content\Behaviors\HasSectionsInterface,
     Belt\Content\Behaviors\IncludesContentInterface,
     Belt\Content\Behaviors\IncludesTemplateInterface
 {
 
     use NodeTrait;
-    use Belt\Clip\Behaviors\Clippable;
     use Belt\Core\Behaviors\HasSortableTrait;
     use Belt\Core\Behaviors\Sluggable;
+    use Belt\Core\Behaviors\TypeTrait;
+    use Belt\Clip\Behaviors\Clippable;
     use Belt\Content\Behaviors\HasSections;
     use Belt\Content\Behaviors\IncludesContent;
     use Belt\Content\Behaviors\IncludesTemplate;

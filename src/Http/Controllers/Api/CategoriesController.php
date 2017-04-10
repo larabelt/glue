@@ -57,12 +57,15 @@ class CategoriesController extends ApiController
         ]);
 
         $this->set($category, $input, [
-            'page_id',
+            'is_active',
             'parent_id',
             'template',
-            'header',
+            'name',
+            'slug',
             'body',
-            'footer',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
         ]);
 
         $category->save();
@@ -99,10 +102,15 @@ class CategoriesController extends ApiController
         $input = $request->all();
 
         $this->set($category, $input, [
+            'is_active',
+            'parent_id',
             'template',
             'name',
             'slug',
             'body',
+            'meta_title',
+            'meta_description',
+            'meta_keywords',
         ]);
 
         $category->save();

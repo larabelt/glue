@@ -1,6 +1,7 @@
 <?php
 namespace Belt\Glue\Http\Requests;
 
+use Belt\Core\Http\Requests\PaginateRequest;
 use Belt\Glue\Category;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -39,11 +40,17 @@ class PaginateCategorizables extends PaginateCategories
     }
 
     /**
-     * @inheritdoc
+     * @param PaginateRequest $request
+     * @param $query
+     * @return mixed
      */
-    public function items(Builder $query)
+    public static function scopeHasCategory(PaginateRequest $request, $query)
     {
-        return $query->get();
+        if ($category_id = $request->get('category_id')) {
+            $query->hasCategory($category_id);
+        }
+
+        return $query;
     }
 
 }
