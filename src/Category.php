@@ -141,4 +141,12 @@ class Category extends Model implements
         $this->getDefaultUrlAttribute();
     }
 
+    /**
+     * Get all of the pages that are assigned this category.
+     */
+    public function pages()
+    {
+        return $this->morphedByMany(Belt\Content\Page::class, 'categorizable');
+    }
+
 }
