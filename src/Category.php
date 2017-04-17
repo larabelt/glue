@@ -127,16 +127,11 @@ class Category extends Model implements
 
     public function getDefaultUrlAttribute()
     {
-        $url = [$this->slug];
-        $ancestors = $this->ancestors()->get();
+        $url = ['categories'];
 
-        if ($ancestors->count()) {
-            foreach ($ancestors as $ancestor) {
-                array_unshift($url, $ancestor->slug);
-            }
+        foreach( $this->hierarchy as $item ) {
+            $url[] = $item['slug'];
         }
-
-        array_unshift($url, 'categories');
 
         return implode('/', $url);
     }
@@ -148,14 +143,25 @@ class Category extends Model implements
 
     public function getHierarchyAttribute()
     {
-        $hierarchy = [$this->name];
+        $hierarchy = [];
+
         $ancestors = $this->ancestors()->get();
 
         if ($ancestors->count()) {
             foreach ($ancestors as $ancestor) {
-                array_unshift($hierarchy, $ancestor->name);
+                $hierarchy[] = [
+                    'id' => $ancestor->id,
+                    'name' => $ancestor->name,
+                    'slug' => $ancestor->slug,
+                ];
             }
         }
+
+        $hierarchy[] = [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+        ];
 
         return $hierarchy;
     }
