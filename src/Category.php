@@ -49,7 +49,7 @@ class Category extends Model implements
     /**
      * @var array
      */
-    protected $appends = ['full_name', 'default_url', 'url', 'image'];
+    protected $appends = ['full_name', 'default_url', 'url', 'hierarchy', 'image'];
 
     /**
      * @param string $glue
@@ -58,7 +58,8 @@ class Category extends Model implements
     public
     function getFullName(
         $glue = ' > '
-    ) {
+    )
+    {
         $names = $this->getAncestors()->pluck('name')->all();
         $names[] = $this->name;
 
@@ -87,7 +88,8 @@ class Category extends Model implements
         $query,
         $categorizable_type,
         $categorizable_id
-    ) {
+    )
+    {
         $query->select(['categories.*']);
         $query->join('categorizables', 'categorizables.category_id', '=', 'categories.id');
         $query->where('categorizables.categorizable_type', $categorizable_type);
@@ -110,7 +112,8 @@ class Category extends Model implements
         $query,
         $categorizable_type,
         $categorizable_id
-    ) {
+    )
+    {
         $query->select(['categories.*']);
         $query->leftJoin('categorizables', function ($subQB) use ($categorizable_type, $categorizable_id) {
             $subQB->on('categorizables.category_id', '=', 'categories.id');
@@ -122,23 +125,45 @@ class Category extends Model implements
         return $query;
     }
 
-    public function getDefaultUrlAttribute() {
-        $url = [$this->slug];
+    public function getDefaultUrlAttribute()
+    {
+        $url = ['categories'];
+
+        foreach( $this->hierarchy as $item ) {
+            $url[] = $item['slug'];
+        }
+
+        return implode('/', $url);
+    }
+
+    public function getUrlAttribute()
+    {
+        $this->getDefaultUrlAttribute();
+    }
+
+    public function getHierarchyAttribute()
+    {
+        $hierarchy = [];
+
         $ancestors = $this->ancestors()->get();
 
-        if( $ancestors->count() ) {
+        if ($ancestors->count()) {
             foreach ($ancestors as $ancestor) {
-                array_unshift($url, $ancestor->slug);
+                $hierarchy[] = [
+                    'id' => $ancestor->id,
+                    'name' => $ancestor->name,
+                    'slug' => $ancestor->slug,
+                ];
             }
         }
 
-        array_unshift($url, 'categories');
+        $hierarchy[] = [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+        ];
 
-        return implode('/',$url);
-    }
-
-    public function getUrlAttribute() {
-        $this->getDefaultUrlAttribute();
+        return $hierarchy;
     }
 
     /**

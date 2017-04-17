@@ -19,14 +19,18 @@ export default {
                 parentCheck(category) {
                     let output = `<b>${category.name}</b>`;
 
-                    if( category.id != null ) {
-                        _.each(this.table.items, item => {
-                            if (item.id == category.parent_id) {
-                                output = `(${item.id})${item.name} > <b>${category.name} </b>`;
-                            }
+                    if( category.hierarchy.length > 1 ) {
+                        output = '';
+                        category.hierarchy.forEach((item, index) => {
+                           let name = `(${item.id}) ${item.name} > `;
+
+                           if( index == category.hierarchy.length - 1 ) {
+                               name = `<b>${item.name}</b>`;
+                           }
+                            output = output + name;
                         });
                     }
-                    
+
                     return output;
                 }
             },
