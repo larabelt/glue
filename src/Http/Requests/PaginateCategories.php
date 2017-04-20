@@ -1,10 +1,8 @@
 <?php
 namespace Belt\Glue\Http\Requests;
 
+use Belt;
 use Belt\Core\Http\Requests\PaginateRequest;
-use Belt\Glue\Http\Requests\PaginateCategorizables;
-use Belt\Glue\Http\Requests\PaginateTaggables;
-use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class PaginateCategories
@@ -38,14 +36,11 @@ class PaginateCategories extends PaginateRequest
         'categories.searchable',
     ];
 
-    public function modifyQuery(Builder $query)
-    {
-        if ($is_active = $this->get('is_active')) {
-            $query->where('is_active', $is_active);
-        }
-
-        return $query;
-    }
-
+    /**
+     * @var Belt\Core\Pagination\PaginationQueryModifier[]
+     */
+    public $queryModifiers = [
+        Belt\Core\Pagination\IsActiveQueryModifier::class,
+    ];
 
 }

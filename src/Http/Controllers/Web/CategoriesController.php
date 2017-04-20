@@ -2,8 +2,7 @@
 
 namespace Belt\Glue\Http\Controllers\Web;
 
-use Auth;
-use Belt\Content\Services\CompileService;
+use Belt\Content\Http\Controllers\Compiler;
 use Belt\Core\Http\Controllers\BaseController;
 use Belt\Glue\Category;
 
@@ -14,18 +13,13 @@ use Belt\Glue\Category;
 class CategoriesController extends BaseController
 {
 
-    /**
-     * @var CompileService
-     */
-    public $service;
+    use Compiler;
 
     /**
      * ApiController constructor.
      */
     public function __construct()
     {
-        $this->service = new CompileService();
-
         $this->middleware('web');
     }
 
@@ -39,38 +33,7 @@ class CategoriesController extends BaseController
     public function show(Category $category)
     {
 
-        $method = $this->env('APP_DEBUG') ? 'compile' : 'cache';
-
-        /**
-         * @todo below does not work on "handled" routes
-         */
-        if ($method == 'cache' && Auth::user()) {
-            try {
-                $this->authorize('update', $category);
-                $method = 'compile';
-            } catch (\Exception $e) {
-
-            }
-        }
-
-        $compiled = $this->service->$method($category);
-
-        return view('belt-glue::categories.web.show', compact('category', 'compiled'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  Category $category
-     *
-     * @return \Illuminate\View\View
-     */
-    public function preview(Category $category)
-    {
-
-        $this->authorize('update', $category);
-
-        $compiled = $this->service->compile($category);
+        $compiled = $this->compile($category);
 
         return view('belt-glue::categories.web.show', compact('category', 'compiled'));
     }

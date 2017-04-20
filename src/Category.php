@@ -31,20 +31,17 @@ class Category extends Model implements
     /**
      * @var string
      */
-    protected
-        $morphClass = 'categories';
+    protected $morphClass = 'categories';
 
     /**
      * @var string
      */
-    protected
-        $table = 'categories';
+    protected $table = 'categories';
 
     /**
      * @var array
      */
-    protected
-        $fillable = ['name', 'body'];
+    protected $fillable = ['name', 'body'];
 
     /**
      * @var array
@@ -55,10 +52,7 @@ class Category extends Model implements
      * @param string $glue
      * @return string
      */
-    public
-    function getFullName(
-        $glue = ' > '
-    )
+    public function getFullName($glue = ' > ')
     {
         $names = $this->getAncestors()->pluck('name')->all();
         $names[] = $this->name;
@@ -69,8 +63,7 @@ class Category extends Model implements
     /**
      * @return string
      */
-    public
-    function getFullNameAttribute()
+    public function getFullNameAttribute()
     {
         return $this->getFullName();
     }
@@ -83,12 +76,7 @@ class Category extends Model implements
      * @param $categorizable_id
      * @return mixed
      */
-    public
-    function scopeCategoried(
-        $query,
-        $categorizable_type,
-        $categorizable_id
-    )
+    public function scopeCategoried($query, $categorizable_type, $categorizable_id)
     {
         $query->select(['categories.*']);
         $query->join('categorizables', 'categorizables.category_id', '=', 'categories.id');
@@ -107,12 +95,7 @@ class Category extends Model implements
      * @param $categorizable_id
      * @return mixed
      */
-    public
-    function scopeNotCategoried(
-        $query,
-        $categorizable_type,
-        $categorizable_id
-    )
+    public function scopeNotCategoried($query, $categorizable_type, $categorizable_id)
     {
         $query->select(['categories.*']);
         $query->leftJoin('categorizables', function ($subQB) use ($categorizable_type, $categorizable_id) {
@@ -125,22 +108,31 @@ class Category extends Model implements
         return $query;
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultUrlAttribute()
     {
         $url = ['categories'];
 
-        foreach( $this->hierarchy as $item ) {
+        foreach ($this->hierarchy as $item) {
             $url[] = $item['slug'];
         }
 
         return implode('/', $url);
     }
 
+    /**
+     * @todo deprecate
+     */
     public function getUrlAttribute()
     {
         $this->getDefaultUrlAttribute();
     }
 
+    /**
+     * @return array
+     */
     public function getHierarchyAttribute()
     {
         $hierarchy = [];
@@ -168,6 +160,8 @@ class Category extends Model implements
 
     /**
      * Get all of the pages that are assigned this category.
+     *
+     * @todo deprecate
      */
     public function pages()
     {

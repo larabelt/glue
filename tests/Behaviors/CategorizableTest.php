@@ -20,6 +20,7 @@ class CategorizableTest extends BeltTestCase
     /**
      * @covers \Belt\Glue\Behaviors\Categorizable::categories
      * @covers \Belt\Glue\Behaviors\Categorizable::purgeCategories
+     * @covers \Belt\Glue\Behaviors\Categorizable::scopeHasCategory
      */
     public function test()
     {
@@ -40,6 +41,21 @@ class CategorizableTest extends BeltTestCase
         DB::shouldReceive('where')->once()->with('categorizable_type', 'categorizableTestStub')->andReturnSelf();
         DB::shouldReceive('delete')->once()->andReturnSelf();
         $categorizable->purgeCategories();
+
+        # scopeHasCategory
+        $categorizable = new CategorizableTestStub();
+        $qbMock = m::mock(Builder::class);
+        $qbMock->shouldReceive('whereHas')->twice()->with('categories',
+            m::on(function (\Closure $closure) {
+                $qbMock = m::mock(Builder::class);
+                $qbMock->shouldReceive('where')->with('categories.id', 1);
+                $qbMock->shouldReceive('where')->with('categories.slug', 'test');
+                $closure($qbMock);
+                return is_callable($closure);
+            })
+        );
+        $categorizable->scopeHasCategory($qbMock, 1);
+        $categorizable->scopeHasCategory($qbMock, 'test');
     }
 
 }
