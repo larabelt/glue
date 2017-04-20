@@ -25,7 +25,7 @@ class TaggableQueryModifierTest extends Testing\BeltTestCase
         $qb = m::mock(Builder::class);
         $qb->shouldReceive('hasTag')->once()->with(1);
 
-        $request = new PaginateRequest(['tag_id' => '1']);
+        $request = new PaginateRequest(['tag' => '1']);
 
         TaggableQueryModifier::modify($qb, $request);
     }
