@@ -46,7 +46,7 @@ class Category extends Model implements
     /**
      * @var array
      */
-    protected $appends = ['full_name', 'default_url', 'url', 'hierarchy', 'image'];
+    protected $appends = ['full_name', 'default_url', 'url', 'hierarchy', 'image', 'morph_class'];
 
     /**
      * @param string $glue
