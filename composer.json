@@ -13,7 +13,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "larabelt/core": "dev-master"
+    "larabelt/core": "dev-handles"
   },
   "autoload": {
     "psr-4": {
