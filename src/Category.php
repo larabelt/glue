@@ -119,7 +119,7 @@ class Category extends Model implements
             $url[] = $item['slug'];
         }
 
-        return implode('/', $url);
+        return '/' . implode('/', $url);
     }
 
     /**
