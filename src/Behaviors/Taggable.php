@@ -49,4 +49,25 @@ trait Taggable
         return $query;
     }
 
+    /**
+     * Return items associated with the given tag
+     *
+     * @param $query
+     * @param $tags
+     * @return mixed
+     */
+    public function scopeHasAllTags($query, $tags)
+    {
+        $tags = is_array($tags) ? $tags : explode(',', $tags);
+
+        foreach ($tags as $tag) {
+            $query->whereHas('tags', function ($query) use ($tag) {
+                $column = is_numeric($tag) ? 'id' : 'slug';
+                $query->where('tags.' . $column, $tag);
+            });
+        }
+
+        return $query;
+    }
+
 }
