@@ -35,7 +35,9 @@ class CategoriesController extends BaseController
 
         $compiled = $this->compile($category);
 
-        return view('belt-glue::categories.web.show', compact('category', 'compiled'));
+        $owner = $category;
+
+        return view('belt-glue::categories.web.show', compact('owner', 'category', 'compiled'));
     }
 
 }
