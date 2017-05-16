@@ -39,18 +39,4 @@ class PaginateCategorizables extends PaginateCategories
         return $query;
     }
 
-    /**
-     * @param PaginateRequest $request
-     * @param $query
-     * @return mixed
-     */
-    public static function scopeHasCategory(PaginateRequest $request, $query)
-    {
-        if ($category_id = $request->get('category_id')) {
-            $query->hasCategory($category_id);
-        }
-
-        return $query;
-    }
-
 }

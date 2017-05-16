@@ -23,11 +23,6 @@ class TagsController extends ApiController
         $this->tags = $tag;
     }
 
-    public function get($id)
-    {
-        return $this->tags->find($id) ?: $this->abort(404);
-    }
-
     /**
      * Display a listing of the resource.
      *

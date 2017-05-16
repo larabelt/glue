@@ -21,6 +21,7 @@ class TaggableTest extends BeltTestCase
      * @covers \Belt\Glue\Behaviors\Taggable::tags
      * @covers \Belt\Glue\Behaviors\Taggable::purgeTags
      * @covers \Belt\Glue\Behaviors\Taggable::scopeHasTag
+     * @covers \Belt\Glue\Behaviors\Taggable::scopeHasAllTags
      */
     public function test()
     {
@@ -31,7 +32,6 @@ class TaggableTest extends BeltTestCase
         $pageMock->shouldReceive('morphMany')->withArgs([Tag::class, 'taggable'])->andReturn($morphMany);
         $pageMock->shouldReceive('tags');
         $pageMock->tags();
-
 
         # scopeHasTag
         $taggable = new TaggableTestStub();
@@ -47,6 +47,23 @@ class TaggableTest extends BeltTestCase
         );
         $taggable->scopeHasTag($qbMock, 1);
         $taggable->scopeHasTag($qbMock, 'test');
+
+        # scopeHasAllTags
+        $taggable = new TaggableTestStub();
+        $qbMock = m::mock(Builder::class);
+        $qbMock->shouldReceive('whereHas')->with('tags',
+            m::on(function (\Closure $closure) {
+                $qbMock = m::mock(Builder::class);
+                $qbMock->shouldReceive('where')->with('tags.id', 1);
+                $qbMock->shouldReceive('where')->with('tags.id', 2);
+                $qbMock->shouldReceive('where')->with('tags.slug', 'test-1');
+                $qbMock->shouldReceive('where')->with('tags.slug', 'test-2');
+                $closure($qbMock);
+                return is_callable($closure);
+            })
+        );
+        $taggable->scopeHasAllTags($qbMock, '1,2');
+        $taggable->scopeHasAllTags($qbMock, 'test-1,test-2');
 
         # purgeTags
         $taggable->id = 1;

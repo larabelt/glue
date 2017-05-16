@@ -22,11 +22,17 @@ class TaggableQueryModifierTest extends Testing\BeltTestCase
      */
     public function test()
     {
+
+        # hasTag
         $qb = m::mock(Builder::class);
         $qb->shouldReceive('hasTag')->once()->with(1);
-
         $request = new PaginateRequest(['tag' => '1']);
+        TaggableQueryModifier::modify($qb, $request);
 
+        # all_tags = true
+        $qb = m::mock(Builder::class);
+        $qb->shouldReceive('hasAllTags')->once()->with('1,2');
+        $request = new PaginateRequest(['tag' => '1,2', 'all_tags' => 1]);
         TaggableQueryModifier::modify($qb, $request);
     }
 
