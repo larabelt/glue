@@ -18,7 +18,7 @@ class PaginateCategories extends PaginateRequest
     /**
      * @var string
      */
-    public $orderBy = 'categories.id';
+    public $orderBy = 'categories._lft';
 
     /**
      * @var array

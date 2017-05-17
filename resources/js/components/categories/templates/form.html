@@ -6,6 +6,19 @@
             > Is Active
         </label>
     </div>
+    <div class="form-group" :class="{ 'has-error': form.error('parent_id') }">
+        <label for="name">Parent Category</label>
+        <input type="hidden" v-model="form.parent_id">
+        <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search" @click="toggle()"></i></div>
+            <input type="text" class="form-control" :value="parentCategory.full_name" readonly>
+            <div v-if="form.parent_id" class="input-group-addon"><i class="fa fa-times-circle" @click="clearParentCategory()"></i></div>
+        </div>
+        <span v-for="error in form.error('parent_id')" class="text-danger">{{ error }}</span>
+    </div>
+    <div v-if="search">
+        <parent-categories :full_admin="false" :confirm_btn="true"></parent-categories>
+    </div>
     <div class="form-group" :class="{ 'has-error': form.error('name') }">
         <label for="name">Name</label>
         <input type="text" class="form-control" v-model="form.name" placeholder="name">
@@ -15,11 +28,6 @@
         <label for="slug">Slug</label>
         <input type="text" class="form-control" v-model="form.slug" placeholder="slug">
         <span v-for="error in form.error('slug')" class="text-danger">{{ error }}</span>
-    </div>
-    <div class="form-group" :class="{ 'has-error': form.error('body') }">
-        <label for="body">Body</label>
-        <textarea class="form-control" rows="10" v-model="form.body" tinymce="'body'"></textarea>
-        <span v-for="error in form.error('body')" class="text-danger">{{ error }}</span>
     </div>
     <div class="form-group" :class="{ 'has-error': form.error('meta_title') }">
         <label for="meta_title">Meta Title</label>

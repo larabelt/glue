@@ -1,24 +1,50 @@
 import shared from './shared';
 
-// helpers
-import Form from '../form';
+import Table from '../table';
 
-// templates make a change
-import heading_html from 'belt/core/js/templates/heading.html';
+import parentCategories from './index-table';
+import categoryForm from './category-form';
+
 import edit_html from '../templates/edit.html';
 import form_html from '../templates/form.html';
 
 export default {
     mixins: [shared],
     components: {
-        tab: {
+        tab: categoryForm,
+        tab1: {
             data() {
                 return {
                     form: this.$parent.form,
+                    parentCategory: this.$parent.parentCategory,
+                    search: false,
+                    table: new Table({router: this.$router}),
                 }
             },
             mounted() {
-                this.form.show(this.$route.params.id);
+                //this.form.show(this.$route.params.id);
+            },
+            methods: {
+                toggle() {
+                    if (!this.search) {
+                        this.table.index();
+                    }
+                    this.search = !this.search;
+                }
+            },
+            components: {
+                parentCategories: {
+                    mixins: [parentCategories],
+                    methods: {
+                        confirm(category) {
+                            if (category.id != this.$parent.form.parent_id) {
+                                this.$parent.form.parent_id = category.id;
+                                this.$parent.search = false;
+                                this.$parent.parentCategory.setData(category);
+                            }
+                        }
+                    }
+                }
             },
             template: form_html,
         },
