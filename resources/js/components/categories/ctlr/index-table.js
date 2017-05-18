@@ -1,4 +1,6 @@
+import Form from '../form';
 import Table from '../table';
+import TreeForm from '../tree';
 import index_html from '../templates/index.html';
 
 export default {
@@ -9,10 +11,40 @@ export default {
     data() {
         return {
             loading: false,
+            moving: new Form(),
             table: new Table({router: this.$router}),
         }
     },
+    computed: {
+        isMoving() {
+            return this.moving.id;
+        },
+    },
     methods: {
+        cancelMove() {
+            this.moving.reset();
+        },
+        move(id, position) {
+            return new Promise((resolve, reject) => {
+
+                let tree = new TreeForm({category: this.moving});
+
+                tree.setData({
+                    neighbor_id: id,
+                    move: position,
+                });
+
+                tree.submit()
+                    .then(() => {
+                        this.moving.reset();
+                        this.table.index();
+                        resolve();
+                    })
+                    .catch(() => {
+                        reject();
+                    });
+            });
+        },
         parentCheck(category) {
             let output = `<b>${category.name}</b>`;
 
@@ -29,7 +61,14 @@ export default {
             }
 
             return output;
-        }
+        },
+        setMoving(id) {
+            if (!this.moving.id) {
+                this.moving.show(id);
+            } else {
+                this.moving.reset();
+            }
+        },
     },
     mounted() {
         this.table.updateQueryFromRouter();
