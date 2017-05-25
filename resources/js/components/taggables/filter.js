@@ -31,7 +31,7 @@ export default {
             this.filter();
         },
         filter() {
-            this.table.query.tag_id = this.tagId;
+            this.table.query.tag = this.tagId;
             this.table.index();
         }
     },
