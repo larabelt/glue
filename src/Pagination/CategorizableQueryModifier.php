@@ -20,5 +20,9 @@ class CategorizableQueryModifier extends PaginationQueryModifier
         if ($category = $request->get('category')) {
             $qb->hasCategory($category);
         }
+
+        if ($category = $request->get('in_category')) {
+            $qb->inCategory($category);
+        }
     }
 }

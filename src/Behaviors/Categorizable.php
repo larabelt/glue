@@ -1,4 +1,5 @@
 <?php
+
 namespace Belt\Glue\Behaviors;
 
 use DB;
@@ -36,6 +37,30 @@ trait Categorizable
                 $column = is_numeric($category) ? 'id' : 'slug';
                 $method = $n === 0 ? 'where' : 'orWhere';
                 $query->$method('categories.' . $column, $category);
+            }
+        });
+
+        return $query;
+    }
+
+    /**
+     * Return items associated with the given category
+     *
+     * @param $query
+     * @param $category
+     * @return mixed
+     */
+    public function scopeInCategory($query, $category)
+    {
+        $query->whereHas('categories', function ($query) use ($category) {
+            $categories = is_array($category) ? $category : explode(',', $category);
+            foreach ($categories as $n => $value) {
+                $method = $n === 0 ? 'where' : 'orWhere';
+                $category = Category::sluggish($value)->first();
+                $query->$method(function ($sub) use ($category) {
+                    $sub->where('categories._lft', '>=', $category->_lft);
+                    $sub->where('categories._rgt', '<=', $category->_rgt);
+                });
             }
         });
 
