@@ -10,7 +10,7 @@ trait Categorizable
 
     public function categories()
     {
-        return $this->morphToSortedMany(Category::class, 'categorizable');
+        return $this->morphToSortedMany(Category::class, 'categorizable')->with('ancestors');
     }
 
     public function purgeCategories()
