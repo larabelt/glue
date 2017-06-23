@@ -8,11 +8,27 @@ use Belt\Glue\Category;
 trait Categorizable
 {
 
+    /**
+     * @return \Rutorika\Sortable\BelongsToSortedMany
+     */
     public function categories()
     {
         return $this->morphToSortedMany(Category::class, 'categorizable');
     }
 
+    /**
+     * Begin category query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function categoryQB()
+    {
+        return Category::query();
+    }
+
+    /**
+     * Purge associated categories
+     */
     public function purgeCategories()
     {
         DB::connection($this->getConnectionName())
@@ -56,7 +72,7 @@ trait Categorizable
             $categories = is_array($category) ? $category : explode(',', $category);
             foreach ($categories as $n => $value) {
                 $method = $n === 0 ? 'where' : 'orWhere';
-                $category = Category::sluggish($value)->first();
+                $category = $this->categoryQB()->sluggish($value)->first();
                 $query->$method(function ($sub) use ($category) {
                     $sub->where('categories._lft', '>=', $category->_lft);
                     $sub->where('categories._rgt', '<=', $category->_rgt);

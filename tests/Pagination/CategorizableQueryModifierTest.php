@@ -24,8 +24,9 @@ class CategorizableQueryModifierTest extends Testing\BeltTestCase
     {
         $qb = m::mock(Builder::class);
         $qb->shouldReceive('hasCategory')->once()->with(1);
+        $qb->shouldReceive('inCategory')->once()->with(2);
 
-        $request = new PaginateRequest(['category' => '1']);
+        $request = new PaginateRequest(['category' => '1', 'in_category' => 2]);
 
         CategorizableQueryModifier::modify($qb, $request);
     }

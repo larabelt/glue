@@ -19,8 +19,10 @@ class CategorizableTest extends BeltTestCase
 
     /**
      * @covers \Belt\Glue\Behaviors\Categorizable::categories
+     * @covers \Belt\Glue\Behaviors\Categorizable::categoryQB
      * @covers \Belt\Glue\Behaviors\Categorizable::purgeCategories
      * @covers \Belt\Glue\Behaviors\Categorizable::scopeHasCategory
+     * @covers \Belt\Glue\Behaviors\Categorizable::scopeInCategory
      */
     public function test()
     {
@@ -56,6 +58,32 @@ class CategorizableTest extends BeltTestCase
         );
         $categorizable->scopeHasCategory($qbMock, 1);
         $categorizable->scopeHasCategory($qbMock, 'test');
+
+        # scopeInCategory
+        $categorizable = new CategorizableTestStub();
+        $qb = m::mock(Builder::class);
+        $qb->shouldReceive('whereHas')->twice()->with('categories',
+            m::on(function (\Closure $closure) {
+                $qb = m::mock(Builder::class);
+                $qb->shouldReceive('where')->with(
+                    m::on(function (\Closure $closure) {
+                        $sub = m::mock(Builder::class);
+                        $sub->shouldReceive('where')->with('categories._lft', '>=', 10)->andReturnSelf();
+                        $sub->shouldReceive('where')->with('categories._rgt', '<=', 20)->andReturnSelf();
+                        $closure($sub);
+                        return is_callable($closure);
+                    })
+                );
+                $closure($qb);
+                return is_callable($closure);
+            })
+        );
+        $categorizable->scopeInCategory($qb, 1);
+        $categorizable->scopeInCategory($qb, 'test');
+
+        # categoryQB
+        $categorizable = new CategorizableTestStub2();
+        $this->assertInstanceOf(Builder::class, $categorizable->categoryQB());
     }
 
 }
@@ -68,4 +96,26 @@ class CategorizableTestStub extends Model
     {
         return 'categorizableTestStub';
     }
+
+    public function categoryQB()
+    {
+        Category::unguard();
+
+        $qb = m::mock(Builder::class);
+        $qb->shouldReceive('sluggish')->with(1)->andReturnSelf();
+        $qb->shouldReceive('sluggish')->with('test')->andReturnSelf();
+        $qb->shouldReceive('first')->andReturn(
+            new Category([
+                '_lft' => 10,
+                '_rgt' => 20,
+            ])
+        );
+
+        return $qb;
+    }
+}
+
+class CategorizableTestStub2 extends Model
+{
+    use Categorizable;
 }
