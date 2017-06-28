@@ -11,6 +11,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @package Belt\Glue
  */
 class Category extends Model implements
+    Belt\Core\Behaviors\IsSearchableInterface,
     Belt\Clip\Behaviors\ClippableInterface,
     Belt\Core\Behaviors\SluggableInterface,
     Belt\Core\Behaviors\TypeInterface,
@@ -20,6 +21,7 @@ class Category extends Model implements
 {
 
     use NodeTrait;
+    use Belt\Core\Behaviors\IsSearchable;
     use Belt\Core\Behaviors\HasSortableTrait;
     use Belt\Core\Behaviors\Sluggable;
     use Belt\Core\Behaviors\TypeTrait;
