@@ -1,4 +1,4 @@
-import indexTable from './index-table';
+import indexTable from 'belt/glue/js/components/categories/ctlr/index-table';
 
 // templates make a change
 import heading_html from 'belt/core/js/templates/heading.html';

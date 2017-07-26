@@ -1,7 +1,7 @@
-import Form from '../form';
-import Table from '../table';
-import TreeForm from '../tree';
-import index_html from '../templates/index.html';
+import Form from 'belt/glue/js/components/categories/form';
+import Table from 'belt/glue/js/components/categories/table';
+import TreeForm from 'belt/glue/js/components/categories/tree';
+import index_html from 'belt/glue/js/components/categories/templates/index.html';
 
 export default {
     props: {

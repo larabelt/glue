@@ -1,10 +1,10 @@
 // helpers
-import Form from '../form';
+import Form from 'belt/glue/js/components/categories/form';
 
 // templates make a change
 import heading_html from 'belt/core/js/templates/heading.html';
-import tabs_html from '../templates/tabs.html';
-import edit_html from '../templates/edit.html';
+import tabs_html from 'belt/glue/js/components/categories/templates/tabs.html';
+import edit_html from 'belt/glue/js/components/categories/templates/edit.html';
 
 export default {
     data() {

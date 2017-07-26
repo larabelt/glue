@@ -1,6 +1,6 @@
 
-import categories  from './components/categories/routes';
-import tags  from './components/tags/routes';
+import categories  from 'belt/glue/js/components/categories/routes';
+import tags  from 'belt/glue/js/components/tags/routes';
 
 export default class BeltGlue {
 
