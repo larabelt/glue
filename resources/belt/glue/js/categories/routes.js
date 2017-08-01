@@ -1,8 +1,8 @@
-import index from 'belt/glue/js/components/categories/ctlr/index';
-import create from 'belt/glue/js/components/categories/ctlr/create';
-import edit  from 'belt/glue/js/components/categories/ctlr/edit';
-import attachments  from 'belt/glue/js/components/categories/ctlr/attachments';
-import sections  from 'belt/glue/js/components/categories/ctlr/sections';
+import index from 'belt/glue/js/categories/ctlr/index';
+import create from 'belt/glue/js/categories/ctlr/create';
+import edit  from 'belt/glue/js/categories/ctlr/edit';
+import attachments  from 'belt/glue/js/categories/ctlr/attachments';
+import sections  from 'belt/glue/js/categories/ctlr/sections';
 
 export default [
     {path: '/categories', component: index, canReuse: false, name: 'categories'},

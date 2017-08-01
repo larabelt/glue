@@ -1,9 +1,9 @@
 // helpers
-import Table from 'belt/glue/js/components/tags/table';
+import Table from 'belt/glue/js/tags/table';
 
 // templates make a change
 import heading_html from 'belt/core/js/templates/heading.html';
-import index_html from 'belt/glue/js/components/tags/templates/index.html';
+import index_html from 'belt/glue/js/tags/templates/index.html';
 
 export default {
 

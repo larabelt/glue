@@ -1,9 +1,9 @@
 // helpers
-import Form from 'belt/glue/js/components/taggables/form';
-import Table from 'belt/glue/js/components/taggables/table';
+import Form from 'belt/glue/js/taggables/form';
+import Table from 'belt/glue/js/taggables/table';
 
 // templates
-import index_html from 'belt/glue/js/components/taggables/templates/index.html';
+import index_html from 'belt/glue/js/taggables/templates/index.html';
 
 export default {
     data() {

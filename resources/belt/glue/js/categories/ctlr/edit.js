@@ -1,12 +1,12 @@
-import shared from 'belt/glue/js/components/categories/ctlr/shared';
+import shared from 'belt/glue/js/categories/ctlr/shared';
 
-import Table from 'belt/glue/js/components/categories/table';
+import Table from 'belt/glue/js/categories/table';
 
-import parentCategories from 'belt/glue/js/components/categories/ctlr/index-table';
-import categoryForm from 'belt/glue/js/components/categories/ctlr/category-form';
+import parentCategories from 'belt/glue/js/categories/ctlr/index-table';
+import categoryForm from 'belt/glue/js/categories/ctlr/category-form';
 
-import edit_html from 'belt/glue/js/components/categories/templates/edit.html';
-import form_html from 'belt/glue/js/components/categories/templates/form.html';
+import edit_html from 'belt/glue/js/categories/templates/edit.html';
+import form_html from 'belt/glue/js/categories/templates/form.html';
 
 export default {
     mixins: [shared],

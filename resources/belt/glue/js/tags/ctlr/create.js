@@ -1,10 +1,10 @@
 // helpers
-import Form from 'belt/glue/js/components/tags/form';
+import Form from 'belt/glue/js/tags/form';
 
 // templates make a change
 import heading_html from 'belt/core/js/templates/heading.html';
-import form_html from 'belt/glue/js/components/tags/templates/form.html';
-import create_html from 'belt/glue/js/components/tags/templates/create.html';
+import form_html from 'belt/glue/js/tags/templates/form.html';
+import create_html from 'belt/glue/js/tags/templates/create.html';
 
 export default {
     components: {

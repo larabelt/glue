@@ -1,6 +1,6 @@
-import Table from 'belt/glue/js/components/categories/table';
-import parentCategories from 'belt/glue/js/components/categories/ctlr/index-table';
-import form_html from 'belt/glue/js/components/categories/templates/form.html';
+import Table from 'belt/glue/js/categories/table';
+import parentCategories from 'belt/glue/js/categories/ctlr/index-table';
+import form_html from 'belt/glue/js/categories/templates/form.html';
 
 export default {
     data() {

@@ -1,8 +1,8 @@
 // helpers
-import Table from 'belt/glue/js/components/tags/table';
+import Table from 'belt/glue/js/tags/table';
 
 // templates
-import filter_html from 'belt/glue/js/components/taggables/templates/filter.html';
+import filter_html from 'belt/glue/js/taggables/templates/filter.html';
 
 export default {
     props: ['table'],

@@ -1,9 +1,9 @@
 // helpers
-import Form from 'belt/glue/js/components/categorizables/form';
-import Table from 'belt/glue/js/components/categorizables/table';
+import Form from 'belt/glue/js/categorizables/form';
+import Table from 'belt/glue/js/categorizables/table';
 
 // templates
-import index_html from 'belt/glue/js/components/categorizables/templates/index.html';
+import index_html from 'belt/glue/js/categorizables/templates/index.html';
 
 export default {
     data() {
