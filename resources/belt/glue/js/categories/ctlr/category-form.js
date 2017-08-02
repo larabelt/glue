@@ -1,4 +1,5 @@
 import Table from 'belt/glue/js/categories/table';
+import templateDropdown from 'belt/content/js/templates';
 import parentCategories from 'belt/glue/js/categories/ctlr/index-table';
 import form_html from 'belt/glue/js/categories/templates/form.html';
 
@@ -25,6 +26,7 @@ export default {
         }
     },
     components: {
+        templateDropdown,
         parentCategories: {
             mixins: [parentCategories],
             methods: {

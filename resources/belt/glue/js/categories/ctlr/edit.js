@@ -1,5 +1,4 @@
 import shared from 'belt/glue/js/categories/ctlr/shared';
-
 import Table from 'belt/glue/js/categories/table';
 
 import parentCategories from 'belt/glue/js/categories/ctlr/index-table';

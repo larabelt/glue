@@ -29,6 +29,7 @@
         <input type="text" class="form-control" v-model="form.slug" placeholder="slug">
         <span v-for="error in form.error('slug')" class="text-danger">{{ error }}</span>
     </div>
+    <template-dropdown templateType="categories"></template-dropdown>
     <div class="form-group" :class="{ 'has-error': form.error('meta_title') }">
         <label for="meta_title">Meta Title</label>
         <input type="text" class="form-control" v-model="form.meta_title" placeholder="meta title">
