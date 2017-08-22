@@ -7,6 +7,7 @@ use Belt\Core\Http\Controllers\Behaviors\Positionable;
 use Belt\Glue\Category;
 use Belt\Glue\Http\Requests;
 use Belt\Core\Helpers\MorphHelper;
+use Illuminate\Http\Request;
 
 class CategorizablesController extends ApiController
 {
@@ -52,17 +53,17 @@ class CategorizablesController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @param $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Requests\PaginateCategorizables $request, $categorizable_type, $categorizable_id)
+    public function index(Request $request, $categorizable_type, $categorizable_id)
     {
-
-        $request->reCapture();
 
         $owner = $this->categorizable($categorizable_type, $categorizable_id);
 
         $this->authorize('view', $owner);
+
+        $request = Requests\PaginateCategorizables::extend($request);
 
         $request->merge([
             'categorizable_id' => $owner->id,

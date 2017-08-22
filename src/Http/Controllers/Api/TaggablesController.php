@@ -7,6 +7,7 @@ use Belt\Core\Http\Controllers\Behaviors\Positionable;
 use Belt\Glue\Tag;
 use Belt\Glue\Http\Requests;
 use Belt\Core\Helpers\MorphHelper;
+use Illuminate\Http\Request;
 
 class TaggablesController extends ApiController
 {
@@ -52,17 +53,16 @@ class TaggablesController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @param $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Requests\PaginateTaggables $request, $taggable_type, $taggable_id)
+    public function index(Request $request, $taggable_type, $taggable_id)
     {
-
-        $request->reCapture();
-
         $owner = $this->taggable($taggable_type, $taggable_id);
 
         $this->authorize('view', $owner);
+
+        $request = Requests\PaginateTaggables::extend($request);
 
         $request->merge([
             'taggable_id' => $owner->id,

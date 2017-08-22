@@ -5,6 +5,7 @@ namespace Belt\Glue\Http\Controllers\Api;
 use Belt\Core\Http\Controllers\ApiController;
 use Belt\Glue\Category;
 use Belt\Glue\Http\Requests;
+use Illuminate\Http\Request;
 
 class CategoriesController extends ApiController
 {
@@ -26,14 +27,16 @@ class CategoriesController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @param $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Requests\PaginateCategories $request)
+    public function index(Request $request)
     {
         $this->authorize('index', Category::class);
 
-        $paginator = $this->paginator($this->categories->query(), $request->reCapture());
+        $request = Requests\PaginateCategories::extend($request);
+
+        $paginator = $this->paginator($this->categories->query(), $request);
 
         return response()->json($paginator->toArray());
     }

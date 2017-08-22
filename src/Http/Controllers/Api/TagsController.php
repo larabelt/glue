@@ -5,6 +5,7 @@ namespace Belt\Glue\Http\Controllers\Api;
 use Belt\Core\Http\Controllers\ApiController;
 use Belt\Glue\Tag;
 use Belt\Glue\Http\Requests;
+use Illuminate\Http\Request;
 
 class TagsController extends ApiController
 {
@@ -26,14 +27,16 @@ class TagsController extends ApiController
     /**
      * Display a listing of the resource.
      *
-     * @param $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Requests\PaginateTags $request)
+    public function index(Request $request)
     {
         $this->authorize('index', Tag::class);
 
-        $paginator = $this->paginator($this->tags->query(), $request->reCapture());
+        $request = Requests\PaginateTags::extend($request);
+
+        $paginator = $this->paginator($this->tags->query(), $request);
 
         return response()->json($paginator->toArray());
     }
