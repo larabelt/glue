@@ -47,9 +47,6 @@
                                 <template v-if="isMoving">
                                     <template v-if="isMoving != item.id">
                                         <div class="btn-group">
-<!--                                            <button class="btn btn-default btn-xs" @click.prevent="move(item.id, 'before')">before</button>-->
-<!--                                            <button class="btn btn-default btn-xs" @click.prevent="move(item.id, 'in')">in</button>-->
-<!--                                            <button class="btn btn-default btn-xs" @click.prevent="move(item.id, 'after')">after</button>-->
                                             <button class="btn btn-default btn-xs" @click.prevent="move(item.id, 'before')" title="move before this item">
                                                 <i class="fa fa-caret-up"></i>
                                             </button>
@@ -70,10 +67,16 @@
 
                                 <div v-if="!isMoving" class="btn-group">
                                     <button class="btn btn-default btn-xs" @click.prevent="setMoving(item.id)"><i class="fa fa-arrows-alt"></i></button>
+                                    <button type="button" class="btn btn-xs btn-flat btn-default dropdown-toggle text-muted" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-gear"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><modal-delete :item-id="item.id" _class="''" :callingObject="table"><i class="fa fa-trash"></i> Remove</modal-delete></li>
+                                    </ul>
                                     <router-link :to="{ name: 'categories.edit', params: { id: item.id } }" :class="'btn btn-xs btn-default'">
                                         <i class="fa fa-edit"></i>
                                     </router-link>
-                                    <modal-delete :item-id="item.id" _czlass="''" :callingObject="table"></modal-delete>
                                 </div>
 
                             </span>
