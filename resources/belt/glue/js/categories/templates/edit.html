@@ -2,21 +2,23 @@
     <heading>
         <span slot="title">Category Editor</span>
         <span slot="subtitle">{{ form.name }}</span>
-        <li><router-link :to="{ name: 'categories' }">Categories</router-link></li>
+        <li>
+            <router-link :to="{ name: 'categories' }">Categories</router-link>
+        </li>
     </heading>
-    <div class="nav-tabs-custom nav-tabs-standalone">
-        <tabs></tabs>
-    </div>
-    <div class="box">
-        <div class="box-body">
-            <div class="clearfix">
-                <div class="pull-right">
-                    <div class="btn-group">
-                        <a class="btn btn-xs btn-default" target="_blank" :href="'/categories/' + form.id">Preview</a>
+    <section class="content">
+        <div class="nav-tabs-custom">
+            <tabs></tabs>
+            <div class="tab-content">
+                <div class="clearfix">
+                    <div class="pull-right">
+                        <div class="btn-group sub-tab-btn-group">
+                            <a class="btn btn-xs btn-default" target="_blank" :href="'/categories/' + form.id">Preview</a>
+                        </div>
                     </div>
                 </div>
+                <tab></tab>
             </div>
-            <tab></tab>
         </div>
-    </div>
+    </section>
 </div>
