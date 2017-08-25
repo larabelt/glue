@@ -8,10 +8,12 @@ use Belt\Glue\Category;
 use Belt\Glue\Http\Requests;
 use Belt\Core\Helpers\MorphHelper;
 use Illuminate\Http\Request;
+use Belt\Core\Http\Controllers\Behaviors\Morphable;
 
 class CategorizablesController extends ApiController
 {
 
+    use Morphable;
     use Positionable;
 
     /**
@@ -24,12 +26,19 @@ class CategorizablesController extends ApiController
      */
     public $morphHelper;
 
-    public function __construct(Category $category, MorphHelper $morphHelper)
+    /**
+     * CategorizablesController constructor.
+     * @param Category $category
+     */
+    public function __construct(Category $category)
     {
         $this->categories = $category;
-        $this->morphHelper = $morphHelper;
     }
 
+    /**
+     * @param $id
+     * @param null $categorizable
+     */
     public function category($id, $categorizable = null)
     {
         $qb = $this->categories->query();
@@ -43,23 +52,18 @@ class CategorizablesController extends ApiController
         return $category ?: $this->abort(404);
     }
 
-    public function categorizable($categorizable_type, $categorizable_id)
-    {
-        $categorizable = $this->morphHelper->morph($categorizable_type, $categorizable_id);
-
-        return $categorizable ?: $this->abort(404);
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
+     * @param string $categorizable_type
+     * @param integer $categorizable_id
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $categorizable_type, $categorizable_id)
     {
 
-        $owner = $this->categorizable($categorizable_type, $categorizable_id);
+        $owner = $this->morphable($categorizable_type, $categorizable_id);
 
         $this->authorize('view', $owner);
 
@@ -78,13 +82,15 @@ class CategorizablesController extends ApiController
     /**
      * Store a newly created resource in glue.
      *
-     * @param  Requests\AttachCategory $request
+     * @param Requests\AttachCategory $request
+     * @param string $categorizable_type
+     * @param integer $categorizable_id
      *
      * @return \Illuminate\Http\Response
      */
     public function store(Requests\AttachCategory $request, $categorizable_type, $categorizable_id)
     {
-        $owner = $this->categorizable($categorizable_type, $categorizable_id);
+        $owner = $this->morphable($categorizable_type, $categorizable_id);
 
         $this->authorize('update', $owner);
 
@@ -96,7 +102,7 @@ class CategorizablesController extends ApiController
             $this->abort(422, ['id' => ['category already attached']]);
         }
 
-        $owner->categories()->attach($id);
+        $owner->categories()->syncWithoutDetaching($id);
 
         return response()->json($category, 201);
     }
@@ -104,13 +110,15 @@ class CategorizablesController extends ApiController
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param string $categorizable_type
+     * @param integer $categorizable_id
+     * @param integer $id
      *
      * @return \Illuminate\Http\Response
      */
     public function show($categorizable_type, $categorizable_id, $id)
     {
-        $owner = $this->categorizable($categorizable_type, $categorizable_id);
+        $owner = $this->morphable($categorizable_type, $categorizable_id);
 
         $this->authorize('view', $owner);
 
@@ -122,13 +130,15 @@ class CategorizablesController extends ApiController
     /**
      * Remove the specified resource from glue.
      *
-     * @param  int $id
+     * @param string $categorizable_type
+     * @param integer $categorizable_id
+     * @param integer $id
      *
      * @return \Illuminate\Http\Response
      */
     public function destroy($categorizable_type, $categorizable_id, $id)
     {
-        $owner = $this->categorizable($categorizable_type, $categorizable_id);
+        $owner = $this->morphable($categorizable_type, $categorizable_id);
 
         $this->authorize('update', $owner);
 
