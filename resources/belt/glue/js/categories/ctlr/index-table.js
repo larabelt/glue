@@ -7,6 +7,7 @@ export default {
     props: {
         confirm_btn: {default: false},
         full_admin: {default: true},
+        filter: {default: true},
     },
     data() {
         return {

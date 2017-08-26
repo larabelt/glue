@@ -1,8 +1,6 @@
-// helpers
 import Form from 'belt/glue/js/categorizables/form';
 import Table from 'belt/glue/js/categorizables/table';
-
-// templates
+//import categories from 'belt/glue/js/categories/ctlr/index-table';
 import index_html from 'belt/glue/js/categorizables/templates/index.html';
 
 export default {
@@ -39,5 +37,26 @@ export default {
             this.detached.query.q = '';
         },
     },
+    // components: {
+    //     categories: {
+    //         mixins: [categories],
+    //         data() {
+    //             return {
+    //                 table: this.$parent.detached,
+    //                 form: this.$parent.form,
+    //             }
+    //         },
+    //         methods: {
+    //             confirm(category) {
+    //                 this.form.setData({id: category.id});
+    //                 this.form.store()
+    //                     .then(response => {
+    //                         this.$parent.detached.query.q = '';
+    //                         this.$parent.table.index();
+    //                     })
+    //             }
+    //         }
+    //     }
+    // },
     template: index_html
 }

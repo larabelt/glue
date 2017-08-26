@@ -1,7 +1,7 @@
 <div class="box" :class="{'box-primary': full_admin}">
     <div class="box-body">
         <div class="clearfix">
-            <div class="pull-left">
+            <div v-if="filter" class="pull-left">
                 <div class="form-group">
                     <input
                             class="form-control"
