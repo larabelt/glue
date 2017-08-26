@@ -3,7 +3,7 @@
         <h4>Search Tags</h4>
         <form class="form-inline" style="margin-bottom: 20px;">
             <div class="form-group">
-                <p class="help-block">Use the search field below to find tags that can be linked to this item.</p>
+                <p class="help-block">Use the search field to find tags that can be linked to this item.</p>
                 <div class="input-group">
                     <div class="input-group-addon"><i class="fa fa-search"></i></div>
                     <input class="form-control" v-model.trim="detached.query.q" @keyup="detached.index()" placeholder="enter tag name">
@@ -29,6 +29,7 @@
         <hr/>
         <h4>Tag List</h4>
         <div v-if="table.items.length">
+            <p class="help-block">The following tags are linked to this item.</p>
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
