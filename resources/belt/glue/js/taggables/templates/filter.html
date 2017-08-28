@@ -1,11 +1,11 @@
 <div>
     <div class="row">
         <div class="col-md-10">
-            <form role="form" class="form form-inline">
+            <form class="form form-inline">
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">tags</div>
-                        <input type="text" class="form-control" v-model.trim="detached.query.q" @keyup="detached.index()" placeholder="">
+                        <input class="form-control" v-model.trim="detached.query.q" @keyup="detached.index()" placeholder="">
                     </div>
                 </div>
                 <template v-for="tag in attached">
