@@ -39,14 +39,19 @@
                         <td>{{ item.name }}</td>
                         <td class="text-right">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-xs btn-default dropdown-toggle text-muted" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
+                                <button
+                                        type="button"
+                                        class="btn btn-xs btn-default dropdown-toggle text-muted"
+                                        data-toggle="dropdown"
+                                        aria-expanded="false"
+                                        title="options"
+                                >
                                     <i class="fa fa-gear"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><modal-delete :item-id="item.id" _class="''" :callingObject="table"><i class="fa fa-trash"></i> Remove</modal-delete></li>
                                 </ul>
-                                <router-link :to="{ name: 'tags.edit', params: { id: item.id } }" :class="'btn btn-xs btn-default'">
+                                <router-link :to="{ name: 'tags.edit', params: { id: item.id } }" :class="'btn btn-xs btn-default'" title="edit tag">
                                     <i class="fa fa-edit"></i>
                                 </router-link>
                             </div>

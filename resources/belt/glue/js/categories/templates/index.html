@@ -65,15 +65,26 @@
                                 </template>
 
                                 <div v-if="!isMoving" class="btn-group">
-                                    <button class="btn btn-default btn-xs" @click.prevent="setMoving(item.id)"><i class="fa fa-arrows-alt"></i></button>
-                                    <button type="button" class="btn btn-xs btn-flat btn-default dropdown-toggle text-muted" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
+                                    <button
+                                            title="move category"
+                                            class="btn btn-default btn-xs"
+                                            @click.prevent="setMoving(item.id)"
+                                    >
+                                        <i class="fa fa-arrows-alt"></i>
+                                    </button>
+                                    <button
+                                                type="button"
+                                                class="btn btn-xs btn-default dropdown-toggle text-muted"
+                                                data-toggle="dropdown"
+                                                aria-expanded="false"
+                                                title="options"
+                                        >
                                         <i class="fa fa-gear"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li><modal-delete :item-id="item.id" _class="''" :callingObject="table"><i class="fa fa-trash"></i> Remove</modal-delete></li>
                                     </ul>
-                                    <router-link :to="{ name: 'categories.edit', params: { id: item.id } }" :class="'btn btn-xs btn-default'">
+                                    <router-link :to="{ name: 'categories.edit', params: { id: item.id } }" :class="'btn btn-xs btn-default'" title="edit category">
                                         <i class="fa fa-edit"></i>
                                     </router-link>
                                 </div>
