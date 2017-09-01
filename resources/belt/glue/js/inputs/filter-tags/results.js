@@ -1,24 +1,30 @@
-// helpers
 import Table from 'belt/glue/js/tags/table';
 
-// templates
-import filter_html from 'belt/glue/js/taggables/templates/filter.html';
+import debounce from 'debounce';
+import base from 'belt/core/js/inputs/filter-base';
+import html from 'belt/glue/js/inputs/filter-tags/results.html';
 
 export default {
-    props: ['table'],
+    mixins: [base],
+    props: {
+        //table: {default: null},
+        //form: {default: null},
+    },
     data() {
         return {
             detached: new Table({
                 morphable_type: this.$parent.morphable_type,
                 morphable_id: this.$parent.morphable_id,
             }),
-            attached: {},
-        }
+        };
     },
     computed: {
         tagId() {
             return _.map(this.attached, 'id').join(",");
         }
+    },
+    created() {
+
     },
     methods: {
         push(tag) {
@@ -34,5 +40,5 @@ export default {
             this.table.index();
         }
     },
-    template: filter_html
+    template: html
 }
