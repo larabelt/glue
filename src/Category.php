@@ -12,9 +12,10 @@ use Kalnoy\Nestedset\NodeTrait;
  */
 class Category extends Model implements
     Belt\Core\Behaviors\IsSearchableInterface,
-    Belt\Clip\Behaviors\ClippableInterface,
+    Belt\Core\Behaviors\ParamableInterface,
     Belt\Core\Behaviors\SluggableInterface,
     Belt\Core\Behaviors\TypeInterface,
+    Belt\Clip\Behaviors\ClippableInterface,
     Belt\Content\Behaviors\HasSectionsInterface,
     Belt\Content\Behaviors\IncludesContentInterface,
     Belt\Content\Behaviors\IncludesTemplateInterface
