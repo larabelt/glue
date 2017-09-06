@@ -1,7 +1,9 @@
 <?php
+
 namespace Belt\Glue\Http\Requests;
 
 use Belt\Core\Http\Requests\PaginateRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class PaginateTags
@@ -33,5 +35,23 @@ class PaginateTags extends PaginateRequest
     public $searchable = [
         'tags.name',
     ];
+
+    /**
+     * @inheritdoc
+     */
+    public function modifyQuery(Builder $query)
+    {
+        # show tags not in array
+        if ($not = $this->get('not')) {
+            $query->whereNotIn('tags.id', explode(',', $not));
+        }
+
+        # show tags in array
+        if ($in = $this->get('in')) {
+            $query->whereIn('tags.id', explode(',', $in));
+        }
+
+        return $query;
+    }
 
 }

@@ -2,13 +2,12 @@
     <div class="form-inline pull-left">
         <div class="form-group">
             <div class="input-group">
-                <div class="input-group-addon">tags</div>
-                <div v-if="detached.items.length" class="input-group-addon">tags</div>
-                <input class="form-control" v-model.trim="detached.query.q" @keyup="detached.index()" placeholder="">
+                <div class="input-group-addon"><i class="fa fa-tag"></i></div>
+                <input class="form-control" :value="needle" @keyup="filter" placeholder="filter by tags">
+                <div v-if="hasDetached" class="input-group-addon" @click.prevent="emptyDetached">
+                    <i class="fa fa-times-circle"></i>
+                </div>
             </div>
         </div>
-        <template v-for="tag in attached">
-            <span class="badge" @click.prevent="pop(tag.id)">{{ tag.name }} <i class="fa fa-times-circle"></i></span>
-        </template>
     </div>
 </div>

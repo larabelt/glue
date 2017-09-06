@@ -1,0 +1,8 @@
+<div>
+    <div v-if="hasAttached" class="filter-set filter-set-badges clearfix">
+        <span class="box-title filter-set-badges-heading">Tags</span>
+        <template v-for="tag in attached">
+            <span class="filter-badge" @click.prevent="remove(tag)" title="remove tag from filter">{{ tag.name }} | <i class="fa fa-times"></i></span>
+        </template>
+    </div>
+</div>

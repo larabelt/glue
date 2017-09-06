@@ -1,0 +1,17 @@
+<div>
+    <template v-if="hasDetached">
+        <h5><strong>Tag Filter Results</strong></h5>
+        <table class="table table-striped table-condensed table-hover">
+            <tbody>
+            <template v-for="tag in detached">
+                <tr>
+                    <td>{{ tag.name }}</td>
+                    <td class="text-right">
+                        <a class="btn btn-xs btn-primary" @click="push(tag)" title="add tag to filter"><i class="fa fa-link"></i></a>
+                    </td>
+                </tr>
+            </template>
+            </tbody>
+        </table>
+    </template>
+</div>

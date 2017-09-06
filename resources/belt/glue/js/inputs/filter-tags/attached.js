@@ -1,5 +1,5 @@
 import shared from 'belt/glue/js/inputs/filter-tags/shared';
-import html from 'belt/glue/js/inputs/filter-tags/filter.html';
+import html from 'belt/glue/js/inputs/filter-tags/attached.html';
 
 export default {
     mixins: [shared],
