@@ -30,7 +30,7 @@ export default {
         remove: (state, tag) => Vue.delete(state.attached, tag.id, tag),
         search: (state) => {
             state.detached.query.q = state.needle;
-            state.detached.query.not = _.map(state.attached, 'id').join(",");
+            state.detached.query.not_in = _.map(state.attached, 'id').join(",");
             state.detached.index();
         },
         queryToAttached: (state, query) => {

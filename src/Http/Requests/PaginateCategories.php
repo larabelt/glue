@@ -11,6 +11,11 @@ use Belt\Core\Http\Requests\PaginateRequest;
 class PaginateCategories extends PaginateRequest
 {
     /**
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    public $modelClass = Belt\Glue\Category::class;
+
+    /**
      * @var int
      */
     public $perPage = 10;
@@ -33,13 +38,13 @@ class PaginateCategories extends PaginateRequest
      */
     public $searchable = [
         'categories.name',
-        //'categories.searchable',
     ];
 
     /**
      * @var Belt\Core\Pagination\PaginationQueryModifier[]
      */
     public $queryModifiers = [
+        Belt\Core\Pagination\InQueryModifier::class,
         Belt\Core\Pagination\IsActiveQueryModifier::class,
     ];
 

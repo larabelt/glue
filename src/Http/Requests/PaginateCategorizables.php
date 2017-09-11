@@ -1,8 +1,7 @@
 <?php
 namespace Belt\Glue\Http\Requests;
 
-use Belt\Core\Http\Requests\PaginateRequest;
-use Belt\Glue\Category;
+use Belt;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
@@ -12,6 +11,11 @@ use Illuminate\Database\Eloquent\Builder;
 class PaginateCategorizables extends PaginateCategories
 {
     /**
+     * @var string
+     */
+    public $table = 'categories';
+
+    /**
      * @var int
      */
     public $perPage = 10;
@@ -20,6 +24,11 @@ class PaginateCategorizables extends PaginateCategories
      * @var string
      */
     public $orderBy = 'categories._lft';
+
+    /**
+     * @var Belt\Core\Pagination\PaginationQueryModifier[]
+     */
+    public $queryModifiers = [];
 
     /**
      * @inheritdoc

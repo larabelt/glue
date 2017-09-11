@@ -15,7 +15,7 @@ class TaggableQueryModifier extends PaginationQueryModifier
      * @param  PaginateRequest $request
      * @return void
      */
-    public static function modify(Builder $qb, PaginateRequest $request)
+    public function modify(Builder $qb, PaginateRequest $request)
     {
         if ($tag = $request->query('tag')) {
             if ($request->query('all_tags')) {

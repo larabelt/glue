@@ -28,7 +28,8 @@ class CategorizableQueryModifierTest extends Testing\BeltTestCase
 
         $request = new PaginateRequest(['category' => '1', 'in_category' => 2]);
 
-        CategorizableQueryModifier::modify($qb, $request);
+        $modifer = new CategorizableQueryModifier($qb, $request);
+        $modifer->modify($qb, $request);
     }
 
 }

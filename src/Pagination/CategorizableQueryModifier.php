@@ -15,7 +15,7 @@ class CategorizableQueryModifier extends PaginationQueryModifier
      * @param  PaginateRequest $request
      * @return void
      */
-    public static function modify(Builder $qb, PaginateRequest $request)
+    public function modify(Builder $qb, PaginateRequest $request)
     {
         if ($category = $request->get('category')) {
             $qb->hasCategory($category);

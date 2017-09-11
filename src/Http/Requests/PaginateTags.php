@@ -2,6 +2,7 @@
 
 namespace Belt\Glue\Http\Requests;
 
+use Belt;
 use Belt\Core\Http\Requests\PaginateRequest;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -11,6 +12,11 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class PaginateTags extends PaginateRequest
 {
+    /**
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    public $modelClass = Belt\Glue\Tag::class;
+
     /**
      * @var int
      */
@@ -37,19 +43,26 @@ class PaginateTags extends PaginateRequest
     ];
 
     /**
+     * @var Belt\Core\Pagination\PaginationQueryModifier[]
+     */
+    public $queryModifiers = [
+        Belt\Core\Pagination\InQueryModifier::class,
+    ];
+
+    /**
      * @inheritdoc
      */
     public function modifyQuery(Builder $query)
     {
-        # show tags not in array
-        if ($not = $this->get('not')) {
-            $query->whereNotIn('tags.id', explode(',', $not));
-        }
+//        # show tags not in array
+//        if ($not = $this->get('not')) {
+//            $query->whereNotIn('tags.id', explode(',', $not));
+//        }
 
-        # show tags in array
-        if ($in = $this->get('in')) {
-            $query->whereIn('tags.id', explode(',', $in));
-        }
+//        # show tags in array
+//        if ($in = $this->get('in')) {
+//            $query->whereIn('tags.id', explode(',', $in));
+//        }
 
         return $query;
     }

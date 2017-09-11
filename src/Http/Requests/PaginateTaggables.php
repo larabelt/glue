@@ -2,6 +2,7 @@
 
 namespace Belt\Glue\Http\Requests;
 
+use Belt;
 use Belt\Core\Http\Requests\PaginateRequest;
 use Belt\Glue\Tag;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,14 +13,21 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class PaginateTaggables extends PaginateTags
 {
+
     /**
      * @var int
      */
     public $perPage = 5;
+
     /**
      * @var Tag
      */
     public $tags;
+
+    /**
+     * @var Belt\Core\Pagination\PaginationQueryModifier[]
+     */
+    public $queryModifiers = [];
 
     /**
      * @return Tag
