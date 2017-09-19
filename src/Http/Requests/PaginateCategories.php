@@ -1,8 +1,10 @@
 <?php
+
 namespace Belt\Glue\Http\Requests;
 
 use Belt;
 use Belt\Core\Http\Requests\PaginateRequest;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class PaginateCategories
@@ -47,5 +49,18 @@ class PaginateCategories extends PaginateRequest
         Belt\Core\Pagination\InQueryModifier::class,
         Belt\Core\Pagination\IsActiveQueryModifier::class,
     ];
+
+    /**
+     * @inheritdoc
+     */
+    public function modifyQuery(Builder $query)
+    {
+        # show child categories
+        if ($parent_ids = $this->get('parent_id')) {
+            $query->whereIn('parent_id', explode(',', $parent_ids));
+        }
+
+        return $query;
+    }
 
 }
