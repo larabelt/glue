@@ -57,7 +57,7 @@ class PaginateCategories extends PaginateRequest
     {
         # show child categories
         if ($parent_ids = $this->get('parent_id')) {
-            $query->whereIn('parent_id', explode(',', $parent_ids));
+            $query->whereIn('categories.parent_id', explode(',', $parent_ids));
         }
 
         return $query;
