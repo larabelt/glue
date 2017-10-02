@@ -1,6 +1,6 @@
-
 import categories  from 'belt/glue/js/categories/routes';
 import tags  from 'belt/glue/js/tags/routes';
+import store from 'belt/core/js/store/index';
 
 export default class BeltGlue {
 
@@ -17,7 +17,7 @@ export default class BeltGlue {
             router.addRoutes(categories);
             router.addRoutes(tags);
 
-            const app = new Vue({router}).$mount('#belt-glue');
+            const app = new Vue({router, store}).$mount('#belt-glue');
         }
     }
 
