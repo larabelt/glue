@@ -2,7 +2,7 @@
 
 namespace Belt\Glue;
 
-use Belt, Validator, View;
+use Belt;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Routing\Router;
@@ -26,6 +26,13 @@ class BeltGlueServiceProvider extends ServiceProvider
     ];
 
     /**
+     * The elastic modifiers for this application
+     *
+     * @var array
+     */
+    protected $modifiers = [];
+
+    /**
      * Register the application services.
      *
      * @return void
@@ -35,6 +42,11 @@ class BeltGlueServiceProvider extends ServiceProvider
         include __DIR__ . '/../routes/admin.php';
         include __DIR__ . '/../routes/api.php';
         include __DIR__ . '/../routes/web.php';
+
+        # elastic
+        foreach ($this->modifiers as $type => $classes) {
+            Belt\Content\Search\Elastic\ElasticEngine::addModifiers($type, $classes);
+        }
     }
 
     /**
@@ -46,9 +58,6 @@ class BeltGlueServiceProvider extends ServiceProvider
     {
         //observers
         Category::observe(Belt\Glue\Observers\CategoryObserver::class);
-
-        // set view paths
-        // $this->loadViewsFrom(resource_path('belt/glue/views'), 'belt-glue');
 
         // set backup view paths
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'belt-glue');
