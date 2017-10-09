@@ -126,7 +126,7 @@ class Category extends Model implements
     }
 
     /**
-     * @todo deprecate
+     * @deprecated
      */
     public function getUrlAttribute()
     {
@@ -164,7 +164,7 @@ class Category extends Model implements
     /**
      * Get all of the pages that are assigned this category.
      *
-     * @todo deprecate
+     * @deprecated
      */
     public function pages()
     {
