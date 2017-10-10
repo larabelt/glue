@@ -4,13 +4,13 @@ namespace Belt\Glue;
 
 use Belt;
 use Illuminate\Database\Eloquent\Model;
-use Kalnoy\Nestedset\NodeTrait;
 
 /**
  * Class Category
  * @package Belt\Glue
  */
 class Category extends Model implements
+    Belt\Core\Behaviors\IsNestedInterface,
     Belt\Core\Behaviors\IsSearchableInterface,
     Belt\Core\Behaviors\ParamableInterface,
     Belt\Core\Behaviors\SluggableInterface,
@@ -21,7 +21,7 @@ class Category extends Model implements
     Belt\Content\Behaviors\IncludesTemplateInterface
 {
 
-    use NodeTrait;
+    use Belt\Core\Behaviors\IsNested;
     use Belt\Core\Behaviors\IsSearchable;
     use Belt\Core\Behaviors\HasSortableTrait;
     use Belt\Core\Behaviors\Sluggable;
@@ -52,23 +52,11 @@ class Category extends Model implements
     protected $appends = ['full_name', 'default_url', 'url', 'hierarchy', 'image', 'morph_class'];
 
     /**
-     * @param string $glue
-     * @return string
-     */
-    public function getFullName($glue = ' > ')
-    {
-        $names = $this->getAncestors()->pluck('name')->all();
-        $names[] = $this->name;
-
-        return implode($glue, $names);
-    }
-
-    /**
      * @return string
      */
     public function getFullNameAttribute()
     {
-        return $this->getFullName();
+        return $this->getNestedName();
     }
 
     /**
@@ -131,34 +119,6 @@ class Category extends Model implements
     public function getUrlAttribute()
     {
         $this->getDefaultUrlAttribute();
-    }
-
-    /**
-     * @return array
-     */
-    public function getHierarchyAttribute()
-    {
-        $hierarchy = [];
-
-        $ancestors = $this->ancestors()->get();
-
-        if ($ancestors->count()) {
-            foreach ($ancestors as $ancestor) {
-                $hierarchy[] = [
-                    'id' => $ancestor->id,
-                    'name' => $ancestor->name,
-                    'slug' => $ancestor->slug,
-                ];
-            }
-        }
-
-        $hierarchy[] = [
-            'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug,
-        ];
-
-        return $hierarchy;
     }
 
     /**
