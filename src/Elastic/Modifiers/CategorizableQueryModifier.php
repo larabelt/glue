@@ -27,14 +27,14 @@ class CategorizableQueryModifier extends PaginationQueryModifier
         /**
          * @todo look at needle for matching categories
          */
-        if ($weighted) {
+        /*if ($weighted) {
             $this->engine->query['bool']['should'][] = [
                 'terms' => [
                     'categories' => $weighted,
                     'boost' => 1,
                 ]
             ];
-        }
+        }*/
 
         if ($filtered) {
             $this->engine->filter[]['bool']['must'][] = [
