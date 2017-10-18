@@ -4,9 +4,25 @@ namespace Belt\Glue\Elastic\Modifiers;
 
 use Belt\Core\Http\Requests\PaginateRequest;
 use Belt\Content\Elastic\Modifiers\PaginationQueryModifier;
+use Belt\Glue\Category;
 
 class CategorizableQueryModifier extends PaginationQueryModifier
 {
+
+
+    /**
+     * @var Category
+     */
+    public $categories;
+
+    /**
+     * @return Category
+     */
+    public function categories()
+    {
+        return $this->categories ?: $this->categories = new Category();
+    }
+
     /**
      * Modify the query
      *
@@ -19,9 +35,21 @@ class CategorizableQueryModifier extends PaginationQueryModifier
         $weighted = [];
         $filtered = [];
 
-        if ($category = $request->get('category')) {
-            $categories = explode(',', $category);
-            $filtered = $categories;
+        if ($id = $request->get('category')) {
+
+            $ids = explode(',', $id);
+            $categories = $this->categories()
+                ->newQuery()
+                ->whereIn('id', $ids)
+                ->orWhereIn('slug', $ids)
+                ->get(['categories.id', 'categories._lft', 'categories._rgt']);
+
+            foreach ($categories as $category) {
+                $_filtered = [$category->id];
+                $_filtered = array_merge($_filtered, $category->descendants()->pluck('id')->all());
+                $filtered = array_unique(array_merge($filtered, $_filtered));
+            }
+
         }
 
         /**
