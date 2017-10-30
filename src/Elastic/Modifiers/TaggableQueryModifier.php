@@ -4,23 +4,22 @@ namespace Belt\Glue\Elastic\Modifiers;
 
 use Belt\Core\Http\Requests\PaginateRequest;
 use Belt\Content\Elastic\Modifiers\PaginationQueryModifier;
-use Belt\Glue\Category;
+use Belt\Glue\Tag;
 
-class CategorizableQueryModifier extends PaginationQueryModifier
+class TaggableQueryModifier extends PaginationQueryModifier
 {
 
+    /**
+     * @var Tag
+     */
+    public $tags;
 
     /**
-     * @var Category
+     * @return Tag
      */
-    public $categories;
-
-    /**
-     * @return Category
-     */
-    public function categories()
+    public function tags()
     {
-        return $this->categories ?: $this->categories = new Category();
+        return $this->tags ?: $this->tags = new Tag();
     }
 
     /**
@@ -32,10 +31,10 @@ class CategorizableQueryModifier extends PaginationQueryModifier
     public function modify(PaginateRequest $request)
     {
 
-        $groups['query'] = [];
         $groups['filter'] = [];
+        $groups['query'] = [];
 
-        if ($value = $request->get('category')) {
+        if ($value = $request->get('tag')) {
             $sets = explode(',', $value);
             foreach ($sets as $s => $set) {
                 $ids = explode(' ', $set);
@@ -44,16 +43,14 @@ class CategorizableQueryModifier extends PaginationQueryModifier
                     $filtered = substr($id, 0, 1) == '~' ? false : true;
                     $id = str_replace(['~'], '', $id);
 
-                    $categories = $this->categories()
+                    $tags = $this->tags()
                         ->newQuery()
                         ->whereIn('id', [$id])
                         ->orWhereIn('slug', [$id])
-                        ->get(['categories.id', 'categories._lft', 'categories._rgt']);
-                    $list = [];
-                    foreach ($categories as $category) {
-                        $list = [$category->id];
-                        $list = array_merge($list, $category->descendants()->pluck('id')->all());
-                    }
+                        ->get(['tags.id']);
+
+                    $list = $tags->pluck('id')->all();
+
                     if ($list) {
                         if ($filtered) {
                             $groups['filter'][$s][] = $list;
@@ -71,7 +68,7 @@ class CategorizableQueryModifier extends PaginationQueryModifier
             foreach ($groups['filter'] as $s => $group) {
                 $filter['bool']['must'] = [];
                 foreach ($group as $_group) {
-                    $filter['bool']['must'][] = ['terms' => ['categories' => $_group]];
+                    $filter['bool']['must'][] = ['terms' => ['tags' => $_group]];
                 }
                 $filters[$s] = $filter;
             }
@@ -87,7 +84,7 @@ class CategorizableQueryModifier extends PaginationQueryModifier
             foreach ($groups['query'] as $s => $groups) {
                 $query['bool']['must'] = [];
                 foreach ($groups as $group) {
-                    $query['bool']['must'][] = ['terms' => ['categories' => $group, 'boost' => 1]];
+                    $query['bool']['must'][] = ['terms' => ['tags' => $group, 'boost' => 1]];
                 }
                 $queries[$s] = $query;
             }
@@ -95,7 +92,6 @@ class CategorizableQueryModifier extends PaginationQueryModifier
                 $this->engine->query['bool']['should'][] = $queries;
             }
         }
-
 
     }
 }

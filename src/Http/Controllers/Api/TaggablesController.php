@@ -91,11 +91,11 @@ class TaggablesController extends ApiController
 
         $tag = $this->tag($id);
 
-        if ($owner->tags->contains($id)) {
-            $this->abort(422, ['id' => ['tag already attached']]);
+        if (!$owner->tags->contains($id)) {
+            $owner->tags()->attach($id);
+            $owner->load('tags');
+            $owner->touch();
         }
-
-        $owner->tags()->attach($id);
 
         return response()->json($tag, 201);
     }
@@ -133,7 +133,11 @@ class TaggablesController extends ApiController
 
         $this->tag($id, $owner);
 
-        $owner->tags()->detach($id);
+        if ($owner->tags->contains($id)) {
+            $owner->tags()->detach($id);
+            $owner->load('tags');
+            $owner->touch();
+        }
 
         return response()->json(null, 204);
     }

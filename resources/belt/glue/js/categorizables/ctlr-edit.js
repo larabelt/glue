@@ -1,7 +1,6 @@
 import Form from 'belt/glue/js/categorizables/form';
 import Table from 'belt/glue/js/categorizables/table';
-//import categories from 'belt/glue/js/categories/ctlr/index-table';
-import index_html from 'belt/glue/js/categorizables/templates/index.html';
+import html from 'belt/glue/js/categorizables/templates/index.html';
 
 export default {
     data() {
@@ -19,6 +18,7 @@ export default {
                 morphable_type: this.$parent.morphable_type,
                 morphable_id: this.$parent.morphable_id,
             }),
+            search: false,
         }
     },
     mounted() {
@@ -33,30 +33,28 @@ export default {
                     this.detached.index();
                 })
         },
-        clear() {
-            this.detached.query.q = '';
+        browse() {
+            this.search = !this.search;
+            if (this.search && !this.detached.items.length) {
+                this.detached.index();
+            }
         },
+        clear() {
+            this.search = false;
+            this.detached.query.q = '';
+            this.detached.empty();
+        },
+        filter: _.debounce(function (query) {
+            this.search = true;
+            if (query) {
+                query.page = 1;
+                this.detached.updateQuery(query);
+            }
+            this.detached.index()
+                .then(() => {
+
+                });
+        }, 250),
     },
-    // components: {
-    //     categories: {
-    //         mixins: [categories],
-    //         data() {
-    //             return {
-    //                 table: this.$parent.detached,
-    //                 form: this.$parent.form,
-    //             }
-    //         },
-    //         methods: {
-    //             confirm(category) {
-    //                 this.form.setData({id: category.id});
-    //                 this.form.store()
-    //                     .then(response => {
-    //                         this.$parent.detached.query.q = '';
-    //                         this.$parent.table.index();
-    //                     })
-    //             }
-    //         }
-    //     }
-    // },
-    template: index_html
+    template: html
 }

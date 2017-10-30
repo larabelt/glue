@@ -98,11 +98,11 @@ class CategorizablesController extends ApiController
 
         $category = $this->category($id);
 
-        if ($owner->categories->contains($id)) {
-            $this->abort(422, ['id' => ['category already attached']]);
+        if (!$owner->categories->contains($id)) {
+            $owner->categories()->attach($id);
+            $owner->load('categories');
+            $owner->touch();
         }
-
-        $owner->categories()->syncWithoutDetaching($id);
 
         return response()->json($category, 201);
     }
@@ -144,7 +144,11 @@ class CategorizablesController extends ApiController
 
         $this->category($id, $owner);
 
-        $owner->categories()->detach($id);
+        if ($owner->categories->contains($id)) {
+            $owner->categories()->detach($id);
+            $owner->load('categories');
+            $owner->touch();
+        }
 
         return response()->json(null, 204);
     }
