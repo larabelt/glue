@@ -31,44 +31,74 @@ class CategorizableQueryModifier extends PaginationQueryModifier
      */
     public function modify(PaginateRequest $request)
     {
+        $params = $this->params($request);
 
-        $groups['query'] = [];
-        $groups['filter'] = [];
+        $this->filter($params);
+        $this->query($params);
+    }
+
+    /**
+     * @param $ids
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function find($ids)
+    {
+        $categories = $this->categories()
+            ->newQuery()
+            ->whereIn('id', $ids)
+            ->orWhereIn('slug', $ids)
+            ->get(['categories.id', 'categories._lft', 'categories._rgt']);
+
+        return $categories;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function params($request)
+    {
+        $params['query'] = [];
+        $params['filter'] = [];
 
         if ($value = $request->get('category')) {
             $sets = explode(',', $value);
             foreach ($sets as $s => $set) {
+
+                $filtered = substr($set, 0, 1) == '~' ? false : true;
+                $set = str_replace(['~'], '', $set);
                 $ids = explode(' ', $set);
+
                 foreach ($ids as $id) {
-
-                    $filtered = substr($id, 0, 1) == '~' ? false : true;
-                    $id = str_replace(['~'], '', $id);
-
-                    $categories = $this->categories()
-                        ->newQuery()
-                        ->whereIn('id', [$id])
-                        ->orWhereIn('slug', [$id])
-                        ->get(['categories.id', 'categories._lft', 'categories._rgt']);
+                    $categories = $this->find([$id]);
                     $list = [];
                     foreach ($categories as $category) {
-                        $list = [$category->id];
+                        $list[] = $category->id;
                         $list = array_merge($list, $category->descendants()->pluck('id')->all());
                     }
                     if ($list) {
                         if ($filtered) {
-                            $groups['filter'][$s][] = $list;
+                            $params['filter'][$s][] = $list;
                         } else {
-                            $groups['query'][$s][] = $list;
+                            $params['query'][$s][] = $list;
                         }
                     }
                 }
             }
         }
 
+        return $params;
+    }
+
+    /**
+     * @param $params
+     */
+    public function filter($params)
+    {
         $filter = [];
         $filters = [];
-        if ($groups['filter']) {
-            foreach ($groups['filter'] as $s => $group) {
+        if ($params['filter']) {
+            foreach ($params['filter'] as $s => $group) {
                 $filter['bool']['must'] = [];
                 foreach ($group as $_group) {
                     $filter['bool']['must'][] = ['terms' => ['categories' => $_group]];
@@ -79,14 +109,19 @@ class CategorizableQueryModifier extends PaginationQueryModifier
                 $this->engine->filter[]['bool']['should'] = $filters;
             }
         }
+    }
 
+    /**
+     * @param $params
+     */
+    public function query($params)
+    {
         $query = [];
         $queries = [];
-
-        if ($groups['query']) {
-            foreach ($groups['query'] as $s => $groups) {
+        if ($params['query']) {
+            foreach ($params['query'] as $s => $params) {
                 $query['bool']['must'] = [];
-                foreach ($groups as $group) {
+                foreach ($params as $group) {
                     $query['bool']['must'][] = ['terms' => ['categories' => $group, 'boost' => 1]];
                 }
                 $queries[$s] = $query;
@@ -95,7 +130,5 @@ class CategorizableQueryModifier extends PaginationQueryModifier
                 $this->engine->query['bool']['should'][] = $queries;
             }
         }
-
-
     }
 }

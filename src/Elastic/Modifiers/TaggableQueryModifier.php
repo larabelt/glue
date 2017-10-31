@@ -30,42 +30,71 @@ class TaggableQueryModifier extends PaginationQueryModifier
      */
     public function modify(PaginateRequest $request)
     {
+        $params = $this->params($request);
 
-        $groups['filter'] = [];
-        $groups['query'] = [];
+        $this->filter($params);
+        $this->query($params);
+    }
+
+    /**
+     * @param $ids
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function find($ids)
+    {
+        $tags = $this->tags()
+            ->newQuery()
+            ->whereIn('id', $ids)
+            ->orWhereIn('slug', $ids)
+            ->get(['tags.id']);
+
+        return $tags;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function params($request)
+    {
+        $params['filter'] = [];
+        $params['query'] = [];
 
         if ($value = $request->get('tag')) {
             $sets = explode(',', $value);
             foreach ($sets as $s => $set) {
+
+                $filtered = substr($set, 0, 1) == '~' ? false : true;
+                $set = str_replace(['~'], '', $set);
                 $ids = explode(' ', $set);
+
                 foreach ($ids as $id) {
-
-                    $filtered = substr($id, 0, 1) == '~' ? false : true;
-                    $id = str_replace(['~'], '', $id);
-
-                    $tags = $this->tags()
-                        ->newQuery()
-                        ->whereIn('id', [$id])
-                        ->orWhereIn('slug', [$id])
-                        ->get(['tags.id']);
+                    $tags = $this->find([$id]);
 
                     $list = $tags->pluck('id')->all();
-
                     if ($list) {
                         if ($filtered) {
-                            $groups['filter'][$s][] = $list;
+                            $params['filter'][$s][] = $list;
                         } else {
-                            $groups['query'][$s][] = $list;
+                            $params['query'][$s][] = $list;
                         }
                     }
                 }
             }
         }
 
+        return $params;
+    }
+
+    /**
+     * @param $params
+     */
+    public function filter($params)
+    {
         $filter = [];
         $filters = [];
-        if ($groups['filter']) {
-            foreach ($groups['filter'] as $s => $group) {
+        if ($params['filter']) {
+            foreach ($params['filter'] as $s => $group) {
                 $filter['bool']['must'] = [];
                 foreach ($group as $_group) {
                     $filter['bool']['must'][] = ['terms' => ['tags' => $_group]];
@@ -76,14 +105,19 @@ class TaggableQueryModifier extends PaginationQueryModifier
                 $this->engine->filter[]['bool']['should'] = $filters;
             }
         }
+    }
 
+    /**
+     * @param $params
+     */
+    public function query($params)
+    {
         $query = [];
         $queries = [];
-
-        if ($groups['query']) {
-            foreach ($groups['query'] as $s => $groups) {
+        if ($params['query']) {
+            foreach ($params['query'] as $s => $params) {
                 $query['bool']['must'] = [];
-                foreach ($groups as $group) {
+                foreach ($params as $group) {
                     $query['bool']['must'][] = ['terms' => ['tags' => $group, 'boost' => 1]];
                 }
                 $queries[$s] = $query;
@@ -92,6 +126,5 @@ class TaggableQueryModifier extends PaginationQueryModifier
                 $this->engine->query['bool']['should'][] = $queries;
             }
         }
-
     }
 }
