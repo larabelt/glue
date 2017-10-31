@@ -21,10 +21,10 @@ class ElasticCategorizableQueryModifierTest extends BeltTestCase
         $engine = m::mock(ElasticEngine::class);
         $modifier = new CategorizableQueryModifier($engine);
 
-        $this->assertFalse(isset($engine->filter[0]['bool']['must'][0]['terms']['categories']));
+        $this->assertFalse(isset($engine->filter[0]['bool']['should']));
 
         $modifier->modify(new PaginateRequest(['category' => '1,2']));
-        $this->assertTrue(isset($engine->filter[0]['bool']['must'][0]['terms']['categories']));
+        $this->assertTrue(isset($engine->filter[0]['bool']['should']));
     }
 
 }
