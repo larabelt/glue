@@ -65,8 +65,8 @@ class TaggableQueryModifier extends PaginationQueryModifier
             foreach ($sets as $s => $set) {
 
                 $filtered = substr($set, 0, 1) == '~' ? false : true;
-                $set = str_replace(['~'], '', $set);
-                $ids = explode(' ', $set);
+                $set = str_replace(['~', ' '], ['', '+'], $set);
+                $ids = explode('+', $set);
 
                 foreach ($ids as $id) {
                     $tags = $this->find([$id]);

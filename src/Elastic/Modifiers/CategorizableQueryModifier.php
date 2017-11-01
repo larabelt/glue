@@ -62,12 +62,13 @@ class CategorizableQueryModifier extends PaginationQueryModifier
         $params['filter'] = [];
 
         if ($value = $request->get('category')) {
+
             $sets = explode(',', $value);
             foreach ($sets as $s => $set) {
 
                 $filtered = substr($set, 0, 1) == '~' ? false : true;
-                $set = str_replace(['~'], '', $set);
-                $ids = explode(' ', $set);
+                $set = str_replace(['~', ' '], ['', '+'], $set);
+                $ids = explode('+', $set);
 
                 foreach ($ids as $id) {
                     $categories = $this->find([$id]);
