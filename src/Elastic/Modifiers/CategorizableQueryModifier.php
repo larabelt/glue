@@ -64,7 +64,7 @@ class CategorizableQueryModifier extends PaginationQueryModifier
         if ($value = $request->get('category')) {
 
             $sets = explode(',', $value);
-            foreach ($sets as $s => $set) {
+            foreach ($sets as $n => $set) {
 
                 $filtered = substr($set, 0, 1) == '~' ? false : true;
                 $set = str_replace(['~', ' '], ['', '+'], $set);
@@ -75,13 +75,13 @@ class CategorizableQueryModifier extends PaginationQueryModifier
                     $list = [];
                     foreach ($categories as $category) {
                         $list[] = $category->id;
-                        $list = array_merge($list, $category->descendants()->pluck('id')->all());
+                        $list = array_merge($list, $category->descendants->pluck('id')->all());
                     }
                     if ($list) {
                         if ($filtered) {
-                            $params['filter'][$s][] = $list;
+                            $params['filter'][$n][] = $list;
                         } else {
-                            $params['query'][$s][] = $list;
+                            $params['query'][$n][] = $list;
                         }
                     }
                 }
@@ -96,15 +96,19 @@ class CategorizableQueryModifier extends PaginationQueryModifier
      */
     public function filter($params)
     {
-        $filter = [];
-        $filters = [];
-        if ($params['filter']) {
-            foreach ($params['filter'] as $s => $group) {
+        $groups = array_get($params, 'filter', []);
+
+        if ($groups) {
+
+            $filter = [];
+            $filters = [];
+
+            foreach ($groups as $group) {
                 $filter['bool']['must'] = [];
                 foreach ($group as $_group) {
                     $filter['bool']['must'][] = ['terms' => ['categories' => $_group]];
                 }
-                $filters[$s] = $filter;
+                $filters[] = $filter;
             }
             if ($filters) {
                 $this->engine->filter[]['bool']['should'] = $filters;
@@ -117,15 +121,19 @@ class CategorizableQueryModifier extends PaginationQueryModifier
      */
     public function query($params)
     {
-        $query = [];
-        $queries = [];
-        if ($params['query']) {
-            foreach ($params['query'] as $s => $params) {
+        $groups = array_get($params, 'query', []);
+
+        if ($groups) {
+
+            $query = [];
+            $queries = [];
+
+            foreach ($groups as $params) {
                 $query['bool']['must'] = [];
                 foreach ($params as $group) {
                     $query['bool']['must'][] = ['terms' => ['categories' => $group, 'boost' => 1]];
                 }
-                $queries[$s] = $query;
+                $queries[] = $query;
             }
             if ($queries) {
                 $this->engine->query['bool']['should'][] = $queries;

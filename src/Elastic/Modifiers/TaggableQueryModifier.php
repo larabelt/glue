@@ -91,10 +91,14 @@ class TaggableQueryModifier extends PaginationQueryModifier
      */
     public function filter($params)
     {
-        $filter = [];
-        $filters = [];
-        if ($params['filter']) {
-            foreach ($params['filter'] as $s => $group) {
+        $groups = array_get($params, 'filter', []);
+
+        if ($groups) {
+
+            $filter = [];
+            $filters = [];
+
+            foreach ($groups as $s => $group) {
                 $filter['bool']['must'] = [];
                 foreach ($group as $_group) {
                     $filter['bool']['must'][] = ['terms' => ['tags' => $_group]];
@@ -112,10 +116,14 @@ class TaggableQueryModifier extends PaginationQueryModifier
      */
     public function query($params)
     {
-        $query = [];
-        $queries = [];
-        if ($params['query']) {
-            foreach ($params['query'] as $s => $params) {
+        $groups = array_get($params, 'query', []);
+
+        if ($groups) {
+
+            $query = [];
+            $queries = [];
+
+            foreach ($groups as $s => $params) {
                 $query['bool']['must'] = [];
                 foreach ($params as $group) {
                     $query['bool']['must'][] = ['terms' => ['tags' => $group, 'boost' => 1]];
