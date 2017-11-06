@@ -64,10 +64,10 @@ class BeltGlueServiceProvider extends ServiceProvider
 
         // route model binding
         $router->model('category', Belt\Glue\Category::class, function ($value) {
-            return Belt\Glue\Category::sluggish($value)->first();
+            return Belt\Glue\Category::sluggish($value)->firstOrFail();
         });
         $router->model('tag', Belt\Glue\Tag::class, function ($value) {
-            return Belt\Glue\Tag::sluggish($value)->first();
+            return Belt\Glue\Tag::sluggish($value)->firstOrFail();
         });
 
         # beltable values for global belt command
