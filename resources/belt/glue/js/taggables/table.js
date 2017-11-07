@@ -7,6 +7,7 @@ class TagTable extends BaseTable {
         super(options);
         let baseUrl = `/api/v1/${this.morphable_type}/${this.morphable_id}/tags/`;
         this.service = new BaseService({baseUrl: baseUrl});
+        this.query.perPage = 10;
     }
 
 }

@@ -13,14 +13,15 @@ export default {
                 morphable_id: this.$parent.morphable_id,
                 query: {not: 1},
             }),
-            table: new Table({
-                morphable_type: this.$parent.morphable_type,
-                morphable_id: this.$parent.morphable_id,
-            }),
             form: new Form({
                 morphable_type: this.$parent.morphable_type,
                 morphable_id: this.$parent.morphable_id,
             }),
+            table: new Table({
+                morphable_type: this.$parent.morphable_type,
+                morphable_id: this.$parent.morphable_id,
+            }),
+            search: false,
         }
     },
     mounted() {
@@ -35,9 +36,28 @@ export default {
                     this.detached.index();
                 })
         },
-        clear() {
-            this.detached.query.q = '';
+        browse() {
+            this.search = !this.search;
+            if (this.search && !this.detached.items.length) {
+                this.detached.index();
+            }
         },
+        clear() {
+            this.search = false;
+            this.detached.query.q = '';
+            this.detached.empty();
+        },
+        filter: _.debounce(function (query) {
+            this.search = true;
+            if (query) {
+                query.page = 1;
+                this.detached.updateQuery(query);
+            }
+            this.detached.index()
+                .then(() => {
+
+                });
+        }, 250),
     },
     template: index_html
 }
