@@ -2,6 +2,7 @@
 
 namespace Belt\Glue\Elastic\Modifiers;
 
+use Belt;
 use Belt\Core\Http\Requests\PaginateRequest;
 use Belt\Content\Elastic\Modifiers\PaginationQueryModifier;
 use Belt\Glue\Tag;
@@ -9,18 +10,7 @@ use Belt\Glue\Tag;
 class TaggableQueryModifier extends PaginationQueryModifier
 {
 
-    /**
-     * @var Tag
-     */
-    public $tags;
-
-    /**
-     * @return Tag
-     */
-    public function tags()
-    {
-        return $this->tags ?: $this->tags = new Tag();
-    }
+    use Belt\Glue\Elastic\Modifiers\TaggableModifierTrait;
 
     /**
      * Modify the query
@@ -34,21 +24,6 @@ class TaggableQueryModifier extends PaginationQueryModifier
 
         $this->filter($params);
         $this->query($params);
-    }
-
-    /**
-     * @param $ids
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
-    public function find($ids)
-    {
-        $tags = $this->tags()
-            ->newQuery()
-            ->whereIn('id', $ids)
-            ->orWhereIn('slug', $ids)
-            ->get(['tags.id']);
-
-        return $tags;
     }
 
     /**
