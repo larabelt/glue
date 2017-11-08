@@ -52,6 +52,14 @@ class Category extends Model implements
     protected $appends = ['full_name', 'default_url', 'url', 'hierarchy', 'image', 'morph_class'];
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'names' => 'array',
+        'slugs' => 'array',
+    ];
+
+    /**
      * @return string
      */
     public function getFullNameAttribute()
