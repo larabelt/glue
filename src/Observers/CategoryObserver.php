@@ -2,13 +2,14 @@
 
 namespace Belt\Glue\Observers;
 
+use Belt;
 use Belt\Glue\Category;
 use Illuminate\Support\Facades\DB;
 
 class CategoryObserver
 {
 
-    public static $touch = false;
+    public static $dispatch = false;
 
     /**
      * Listen to the Category deleting event.
@@ -36,12 +37,9 @@ class CategoryObserver
     public function saving(Category $category)
     {
         $dirty = $category->getDirty();
-        if (!static::$touch && (isset($dirty['name']) || isset($dirty['slug']))) {
-            static::$touch = true;
+        if (isset($dirty['name']) || isset($dirty['slug'])) {
+            static::$dispatch = true;
         }
-
-        $category->names = $category->getNestedNames();
-        $category->slugs = $category->getNestedSlugs();
     }
 
     /**
@@ -52,10 +50,8 @@ class CategoryObserver
      */
     public function saved(Category $category)
     {
-        if (static::$touch) {
-            foreach ($category->children as $child) {
-                $child->touch();
-            }
+        if (static::$dispatch) {
+            dispatch(new Belt\Glue\Jobs\UpdateCategoryData($category));
         }
     }
 

@@ -19,14 +19,10 @@ class BeltUpdateCategoriesTable2 extends Migration
             $table->text('slugs')->nullable();
         });
 
-        CategoryObserver::$touch = true;
-
-        $categories = Category::query()
-            ->whereNull('parent_id')
-            ->get();
+        $categories = Category::query()->whereNull('parent_id')->get();
 
         foreach ($categories as $category) {
-            $category->touch();
+            dispatch(new Belt\Glue\Jobs\UpdateCategoryData($category));
         }
     }
 
