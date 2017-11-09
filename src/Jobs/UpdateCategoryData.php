@@ -38,6 +38,9 @@ class UpdateCategoryData implements ShouldQueue
         $this->__handle($this->category);
     }
 
+    /**
+     * @param Category $category
+     */
     public function __handle(Category $category)
     {
         $category->names = $category->getNestedNames();

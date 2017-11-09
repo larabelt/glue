@@ -4,7 +4,7 @@ use Mockery as m;
 use Belt\Core\Testing\BeltTestCase;
 use Belt\Glue\Category;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Collection;
 
 class CategoryTest extends BeltTestCase
 {
@@ -17,10 +17,24 @@ class CategoryTest extends BeltTestCase
      * @covers \Belt\Glue\Category::scopeCategoried
      * @covers \Belt\Glue\Category::scopeNotCategoried
      * @covers \Belt\Glue\Category::getHierarchyAttribute
+     * @covers \Belt\Glue\Category::getFullNameAttribute
+     * @covers \Belt\Glue\Category::getDefaultUrlAttribute
+     * @covers \Belt\Glue\Category::getUrlAttribute
+     * @covers \Belt\Glue\Category::pages
      */
     public function test()
     {
         $category = factory(Category::class)->make();
+
+        # getFullNameAttribute
+        $this->assertEquals($category->getNestedName(), $category->full_name);
+
+        # getDefaultUrlAttribute
+        $this->assertNotEmpty($category->default_url);
+        $this->assertEquals($category->default_url, $category->url);
+
+        # pages (bletch)
+        $this->assertInstanceOf(Collection::class, $category->pages);
 
         # scopeCategoried
         $qbMock = m::mock(Builder::class);

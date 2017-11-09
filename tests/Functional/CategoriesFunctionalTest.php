@@ -14,6 +14,7 @@ class CategoriesFunctionalTest extends Testing\BeltTestCase
         $response = $this->json('GET', '/api/v1/categories');
         $response->assertStatus(200);
 
+
         # store
         $response = $this->json('POST', '/api/v1/categories', [
             'name' => 'test',

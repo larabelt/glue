@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class CategoryObserver
 {
 
-    public static $dispatch = false;
+    private $dispatch = false;
 
     /**
      * Listen to the Category deleting event.
@@ -38,7 +38,7 @@ class CategoryObserver
     {
         $dirty = $category->getDirty();
         if (isset($dirty['name']) || isset($dirty['slug'])) {
-            static::$dispatch = true;
+            $this->readyDispatch();
         }
     }
 
@@ -50,9 +50,28 @@ class CategoryObserver
      */
     public function saved(Category $category)
     {
-        if (static::$dispatch) {
-            dispatch(new Belt\Glue\Jobs\UpdateCategoryData($category));
+        if ($this->dispatch) {
+            $this->dispatch($category);
         }
+    }
+
+    /**
+     * Get observer ready to dispatch job
+     */
+    public function readyDispatch()
+    {
+        $this->dispatch = true;
+    }
+
+    /**
+     * Dispath job
+     *
+     * @param $category
+     */
+    public function dispatch($category)
+    {
+        $this->dispatch = false;
+        dispatch(new Belt\Glue\Jobs\UpdateCategoryData($category));
     }
 
 }

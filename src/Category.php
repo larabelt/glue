@@ -126,7 +126,7 @@ class Category extends Model implements
      */
     public function getUrlAttribute()
     {
-        $this->getDefaultUrlAttribute();
+        return $this->getDefaultUrlAttribute();
     }
 
     /**

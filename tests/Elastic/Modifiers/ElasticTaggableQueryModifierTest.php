@@ -16,9 +16,7 @@ class ElasticTaggableQueryModifierTest extends BeltTestCase
     }
 
     /**
-     * @covers \Belt\Glue\Elastic\Modifiers\TaggableQueryModifier::tags
      * @covers \Belt\Glue\Elastic\Modifiers\TaggableQueryModifier::modify
-     * @covers \Belt\Glue\Elastic\Modifiers\TaggableQueryModifier::find
      * @covers \Belt\Glue\Elastic\Modifiers\TaggableQueryModifier::params
      * @covers \Belt\Glue\Elastic\Modifiers\TaggableQueryModifier::filter
      * @covers \Belt\Glue\Elastic\Modifiers\TaggableQueryModifier::query
@@ -28,22 +26,6 @@ class ElasticTaggableQueryModifierTest extends BeltTestCase
         Tag::unguard();
 
         $engine = m::mock(ElasticEngine::class);
-
-        # tags
-        $modifier = new TaggableQueryModifier($engine);
-        $this->assertInstanceOf(Tag::class, $modifier->tags());
-
-        # find
-        $modifier = new TaggableQueryModifier($engine);
-        $tag = factory(Tag::class)->make(['id' => 1]);
-        $collection = new Collection([$tag]);
-        $tagsRepo = m::mock(Tag::class);
-        $tagsRepo->shouldReceive('newQuery')->andReturnSelf();
-        $tagsRepo->shouldReceive('whereIn')->with('id', [1])->andReturnSelf();
-        $tagsRepo->shouldReceive('orWhereIn')->with('slug', [1])->andReturnSelf();
-        $tagsRepo->shouldReceive('get')->andReturn($collection);
-        $modifier->tags = $tagsRepo;
-        $modifier->find([1]);
 
         # modify
         $modifier = m::mock(TaggableQueryModifier::class . '[params,filter,query]', [$engine]);
