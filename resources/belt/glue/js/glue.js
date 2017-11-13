@@ -2,6 +2,8 @@ import categories  from 'belt/glue/js/categories/routes';
 import tags  from 'belt/glue/js/tags/routes';
 import store from 'belt/core/js/store/index';
 
+window.larabelt.glue = _.get(window, 'larabelt.glue', {});
+
 export default class BeltGlue {
 
     constructor() {
