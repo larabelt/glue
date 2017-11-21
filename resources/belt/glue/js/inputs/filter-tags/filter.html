@@ -1,11 +1,14 @@
 <div>
-    <div class="form-inline pull-left">
+    <div class="form pull-left">
         <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-tag"></i></div>
-                <input class="form-control" :value="needle" @keyup="filter" placeholder="filter by tags">
-                <div v-if="hasDetached" class="input-group-addon" @click.prevent="emptyDetached">
-                    <i class="fa fa-times-circle"></i>
+            <label><slot></slot></label>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-tag"></i></div>
+                    <input class="form-control" :value="needle" @keyup="filter" placeholder="filter by tags">
+                    <div v-if="hasDetached" class="input-group-addon" @click.prevent="emptyDetached">
+                        <i class="fa fa-times-circle"></i>
+                    </div>
                 </div>
             </div>
         </div>
