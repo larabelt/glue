@@ -1,7 +1,7 @@
 {
   "name": "larabelt/glue",
   "description": "Glue package for LaraBelt.",
-  "keywords": ["cms", "laravel"],
+  "keywords": ["cms", "laravel", "larabelt"],
   "license": "MIT",
   "authors": [
     {
