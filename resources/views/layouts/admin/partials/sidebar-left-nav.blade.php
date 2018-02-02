@@ -1,11 +1,20 @@
-@if(!$team)
+@php
+    $can['categories'] = Auth::user()->can('edit', Belt\Glue\Category::class);
+    $can['tags'] = Auth::user()->can('edit', Belt\Glue\Tag::class);
+@endphp
+
+@if($can['categories'] || $can['tags'])
     <li class="treeview">
         <a href="#">
             <i class="fa fa-tint"></i> <span>Glue Admin</span> <i class="fa fa-angle-left pull-right"></i>
         </a>
         <ul class="treeview-menu">
-            <li><a href="/admin/belt/glue/categories"><i class="fa fa-sitemap"></i> <span>Categories</span></a></li>
-            <li><a href="/admin/belt/glue/tags"><i class="fa fa-tags"></i> <span>Tags</span></a></li>
+            @if($can['categories'])
+                <li><a href="/admin/belt/glue/categories"><i class="fa fa-sitemap"></i> <span>Categories</span></a></li>
+            @endif
+            @if($can['tags'])
+                <li><a href="/admin/belt/glue/tags"><i class="fa fa-tags"></i> <span>Tags</span></a></li>
+            @endif
         </ul>
     </li>
 @endif

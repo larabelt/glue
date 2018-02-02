@@ -13,5 +13,6 @@ class BeltGlueSeeder extends Seeder
     {
         $this->call(BeltGlueCategorySeeds::class);
         $this->call(BeltGlueTagSeeds::class);
+        $this->call(BeltGluePermissbleSeeds::class);
     }
 }

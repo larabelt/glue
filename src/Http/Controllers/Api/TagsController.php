@@ -32,7 +32,7 @@ class TagsController extends ApiController
      */
     public function index(Request $request)
     {
-        $this->authorize('index', Tag::class);
+        $this->authorize('view', Tag::class);
 
         $request = Requests\PaginateTags::extend($request);
 
