@@ -65,6 +65,8 @@ class TagsController extends ApiController
 
         $tag->save();
 
+        $this->itemEvent('created', $tag);
+
         return response()->json($tag, 201);
     }
 
@@ -104,6 +106,8 @@ class TagsController extends ApiController
 
         $tag->save();
 
+        $this->itemEvent('updated', $tag);
+
         return response()->json($tag);
     }
 
@@ -118,6 +122,8 @@ class TagsController extends ApiController
     public function destroy(Tag $tag)
     {
         $this->authorize('delete', $tag);
+
+        $this->itemEvent('deleted', $tag);
 
         $tag->delete();
 

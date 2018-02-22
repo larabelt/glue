@@ -95,6 +95,7 @@ class TaggablesController extends ApiController
             $owner->tags()->attach($id);
             $owner->load('tags');
             $owner->touch();
+            $this->itemEvent('updated', $owner);
         }
 
         return response()->json($tag, 201);
@@ -137,6 +138,7 @@ class TaggablesController extends ApiController
             $owner->tags()->detach($id);
             $owner->load('tags');
             $owner->touch();
+            $this->itemEvent('updated', $owner);
         }
 
         return response()->json(null, 204);

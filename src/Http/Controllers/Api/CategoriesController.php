@@ -73,6 +73,8 @@ class CategoriesController extends ApiController
 
         $category->save();
 
+        $this->itemEvent('created', $category);
+
         return response()->json($category, 201);
     }
 
@@ -118,6 +120,8 @@ class CategoriesController extends ApiController
 
         $category->save();
 
+        $this->itemEvent('updated', $category);
+
         return response()->json($category);
     }
 
@@ -132,6 +136,8 @@ class CategoriesController extends ApiController
     public function destroy(Category $category)
     {
         $this->authorize('delete', $category);
+
+        $this->itemEvent('deleted', $category);
 
         $category->delete();
 
