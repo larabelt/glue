@@ -102,6 +102,7 @@ class CategorizablesController extends ApiController
             $owner->categories()->attach($id);
             $owner->load('categories');
             $owner->touch();
+            $this->itemEvent('categories.attached', $owner);
         }
 
         return response()->json($category, 201);
@@ -148,6 +149,7 @@ class CategorizablesController extends ApiController
             $owner->categories()->detach($id);
             $owner->load('categories');
             $owner->touch();
+            $this->itemEvent('categories.detached', $owner);
         }
 
         return response()->json(null, 204);
