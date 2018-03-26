@@ -30,6 +30,8 @@
                             Name
                             <column-sorter :column="'tags.name'"></column-sorter>
                         </th>
+                        <th>Created<column-sorter :column="'tags.created_at'"></column-sorter></th>
+                        <th>Updated<column-sorter :column="'tags.updated_at'"></column-sorter></th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
@@ -37,6 +39,8 @@
                     <tr v-for="item in table.items">
                         <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
+                        <td>{{ item.created_at }}</td>
+                        <td>{{ item.updated_at }}</td>
                         <td class="text-right">
                             <div class="btn-group">
                                 <button
@@ -62,6 +66,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Created</th>
+                        <th>Updated</th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </tfoot>

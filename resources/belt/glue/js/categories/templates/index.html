@@ -33,6 +33,8 @@
                             Name
                             <column-sorter :column="'categories.name'"></column-sorter>
                         </th>
+                        <th v-if="full_admin">Created<column-sorter :column="'categories.created_at'"></column-sorter></th>
+                        <th v-if="full_admin">Updated<column-sorter :column="'categories.updated_at'"></column-sorter></th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </thead>
@@ -40,6 +42,8 @@
                     <tr v-for="item in table.items">
                         <td>{{ item.id }}</td>
                         <td v-html="parentCheck(item)"></td>
+                        <td v-if="full_admin">{{ item.created_at }}</td>
+                        <td v-if="full_admin">{{ item.updated_at }}</td>
                         <td class="text-right">
                             <span v-if="full_admin">
 
@@ -100,6 +104,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Created</th>
+                        <th>Updated</th>
                         <th class="text-right">Actions</th>
                     </tr>
                 </tfoot>

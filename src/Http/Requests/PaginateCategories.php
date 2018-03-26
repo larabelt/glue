@@ -33,6 +33,8 @@ class PaginateCategories extends PaginateRequest
     public $sortable = [
         'categories.id',
         'categories.name',
+        'categories.created_at',
+        'categories.updated_at',
     ];
 
     /**
