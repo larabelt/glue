@@ -32,6 +32,9 @@ class CategoriesController extends BaseController
      */
     public function show(Category $category)
     {
+        if (!$category->is_active) {
+            abort(404);
+        }
 
         $compiled = $this->compile($category);
 
