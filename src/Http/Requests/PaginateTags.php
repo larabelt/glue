@@ -33,6 +33,8 @@ class PaginateTags extends PaginateRequest
     public $sortable = [
         'tags.id',
         'tags.name',
+        'tags.created_at',
+        'tags.updated_at',
     ];
 
     /**
