@@ -33,7 +33,11 @@ class CategoriesController extends BaseController
     public function show(Category $category)
     {
         if (!$category->is_active) {
-            abort(404);
+            try {
+                $this->authorize('update', $category);
+            } catch (\Exception $e) {
+                abort(404);
+            }
         }
 
         $compiled = $this->compile($category);
