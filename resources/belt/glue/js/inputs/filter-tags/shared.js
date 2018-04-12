@@ -1,4 +1,3 @@
-import debounce from 'debounce';
 import base from 'belt/core/js/inputs/filter-base';
 import store from 'belt/glue/js/inputs/filter-tags/store';
 
@@ -54,7 +53,7 @@ export default {
             this.$store.dispatch('filterTags/remove', tag);
             this.$emit('filter-tags-update', {tag: this.query});
         },
-        filter: debounce(function (e) {
+        filter: _.debounce(function (e) {
             let needle = e.target.value;
             if (needle) {
                 this.$store.dispatch('filterTags/needle', needle);
