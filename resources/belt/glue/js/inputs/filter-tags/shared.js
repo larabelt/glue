@@ -53,7 +53,7 @@ export default {
             this.$store.dispatch('filterTags/remove', tag);
             this.$emit('filter-tags-update', {tag: this.query});
         },
-        filter: _.debounce(function (query) {
+        filter: _.debounce(function (e) {
             let needle = e.target.value;
             if (needle) {
                 this.$store.dispatch('filterTags/needle', needle);
