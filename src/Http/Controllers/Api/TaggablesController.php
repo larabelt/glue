@@ -60,7 +60,7 @@ class TaggablesController extends ApiController
     {
         $owner = $this->taggable($taggable_type, $taggable_id);
 
-        $this->authorize('view', $owner);
+        $this->authorize(['view', 'create', 'update', 'delete'], $owner);
 
         $request = Requests\PaginateTaggables::extend($request);
 
@@ -112,7 +112,7 @@ class TaggablesController extends ApiController
     {
         $owner = $this->taggable($taggable_type, $taggable_id);
 
-        $this->authorize('view', $owner);
+        $this->authorize(['view', 'create', 'update', 'delete'], $owner);
 
         $tag = $this->tag($id, $owner);
 

@@ -32,7 +32,7 @@ class CategoriesController extends ApiController
      */
     public function index(Request $request)
     {
-        $this->authorize('view', Category::class);
+        $this->authorize(['view', 'create', 'update', 'delete'], Category::class);
 
         $request = Requests\PaginateCategories::extend($request);
 
@@ -87,7 +87,7 @@ class CategoriesController extends ApiController
      */
     public function show(Category $category)
     {
-        $this->authorize('view', $category);
+        $this->authorize(['view', 'create', 'update', 'delete'], $category);
 
         return response()->json($category);
     }
