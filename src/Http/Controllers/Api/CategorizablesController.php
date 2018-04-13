@@ -65,7 +65,7 @@ class CategorizablesController extends ApiController
 
         $owner = $this->morphable($categorizable_type, $categorizable_id);
 
-        $this->authorize('view', $owner);
+        $this->authorize(['view', 'create', 'update', 'delete'], $owner);
 
         $request = Requests\PaginateCategorizables::extend($request);
 
@@ -121,7 +121,7 @@ class CategorizablesController extends ApiController
     {
         $owner = $this->morphable($categorizable_type, $categorizable_id);
 
-        $this->authorize('view', $owner);
+        $this->authorize(['view', 'create', 'update', 'delete'], $owner);
 
         $category = $this->category($id, $owner);
 

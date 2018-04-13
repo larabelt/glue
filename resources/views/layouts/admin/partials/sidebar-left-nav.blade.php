@@ -1,6 +1,6 @@
 {{--@php--}}
-    {{--$can['categories'] = Auth::user()->can('edit', Belt\Glue\Category::class);--}}
-    {{--$can['tags'] = Auth::user()->can('edit', Belt\Glue\Tag::class);--}}
+    {{--$can['categories'] = $auth->can(['create','update','delete'], Belt\Glue\Category::class);--}}
+    {{--$can['tags'] = $auth->can(['create','update','delete'], Belt\Glue\Tag::class);--}}
 {{--@endphp--}}
 
 {{--@if($can['categories'] || $can['tags'])--}}
