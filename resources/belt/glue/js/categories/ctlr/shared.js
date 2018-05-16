@@ -16,7 +16,6 @@ export default {
         }
     },
     components: {
-
         tabs: {template: tabs_html},
     },
     mounted() {

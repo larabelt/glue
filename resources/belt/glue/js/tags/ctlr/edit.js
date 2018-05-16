@@ -1,4 +1,3 @@
-
 // helpers
 import Form from 'belt/glue/js/tags/form';
 
@@ -8,16 +7,20 @@ import edit_html from 'belt/glue/js/tags/templates/edit.html';
 import form_html from 'belt/glue/js/tags/templates/form.html';
 
 export default {
+    data() {
+        return {
+            form: new Form(),
+        }
+    },
+    mounted() {
+        this.form.show(this.$route.params.id);
+    },
     components: {
-
         edit: {
             data() {
                 return {
-                    form: new Form(),
+                    form: this.$parent.form,
                 }
-            },
-            mounted() {
-                this.form.show(this.$route.params.id);
             },
             template: form_html,
         },
