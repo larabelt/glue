@@ -1,7 +1,7 @@
 import indexTable from 'belt/glue/js/categories/ctlr/index-table';
 
 // templates make a change
-import heading_html from 'belt/core/js/templates/heading.html';
+
 
 export default {
     props: {
@@ -9,7 +9,7 @@ export default {
         full_admin: {default: true},
     },
     components: {
-        heading: {template: heading_html},
+
         indexTable
     },
     template: `
