@@ -27,6 +27,7 @@ export default {
         <div>
             <heading>
                 <span slot="title">Tag Manager</span>
+                <li><router-link :to="{ name: 'tags' }">Tag Manager</router-link></li>
             </heading>
             <section class="content">
                 <index></index>

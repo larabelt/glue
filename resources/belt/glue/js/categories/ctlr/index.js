@@ -16,6 +16,7 @@ export default {
         <div>
             <heading v-if="full_admin">
                 <span slot="title">Category Manager</span>
+                <li><router-link :to="{ name: 'categories' }">Category Manager</router-link></li>
             </heading>
             <section class="content">
                 <index-table></index-table>
