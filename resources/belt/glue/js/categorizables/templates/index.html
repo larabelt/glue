@@ -1,56 +1,59 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4>Search Categories</h4>
-        <form class="form-inline" style="margin-bottom: 20px;">
-            <div class="form-group">
-                <p class="help-block">Use the search field to find categories that can be linked to this item.</p>
-                <div class="input-group">
-                    <div class="input-group-addon" @click="browse()"><i class="fa fa-search"></i></div>
-                    <input class="form-control" v-model.trim="detached.query.q" @keyup="filter()" placeholder="enter category name">
-                    <div v-if="search" class="input-group-addon" @click="clear()"><i class="fa fa-times-circle"></i></div>
+<div>
+    <p class="text-muted">{{ trans('belt-glue::categorizables.manager.overall') }}</p>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Search Categories</h4>
+            <form class="form-inline" style="margin-bottom: 20px;">
+                <div class="form-group">
+                    <p class="help-block">Use the search field to find categories that can be linked to this item.</p>
+                    <div class="input-group">
+                        <div class="input-group-addon" @click="browse()"><i class="fa fa-search"></i></div>
+                        <input class="form-control" v-model.trim="detached.query.q" @keyup="filter()" placeholder="enter category name">
+                        <div v-if="search" class="input-group-addon" @click="clear()"><i class="fa fa-times-circle"></i></div>
+                    </div>
                 </div>
-            </div>
-        </form>
-        <template v-if="search">
-            <h5><strong>Category Search Results</strong></h5>
-            <table class="table table-striped table-condensed table-hover">
-                <tbody>
-                <tr v-for="category in detached.items">
-                    <td>{{ category.full_name }}</td>
-                    <td class="text-right">
-                        <a class="btn btn-xs btn-primary" @click="attach(category.id)" title="link this category"><i class="fa fa-link"></i></a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <pagination :table="detached"></pagination>
-        </template>
-    </div>
-    <div class="col-md-12">
-        <hr/>
-        <h4>Category List</h4>
-        <div v-if="table.items.length">
-            <p class="help-block">The following categories are linked to this item.</p>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th class="text-right">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="category in table.items">
-                    <td>{{ category.full_name }}</td>
-                    <td class="text-right">
-                        <a class="btn btn-xs btn-danger" @click="table.destroy(category.id)" title="unlink this category"><i class="fa fa-unlink"></i></a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <pagination></pagination>
+            </form>
+            <template v-if="search">
+                <h5><strong>Category Search Results</strong></h5>
+                <table class="table table-striped table-condensed table-hover">
+                    <tbody>
+                    <tr v-for="category in detached.items">
+                        <td>{{ category.full_name }}</td>
+                        <td class="text-right">
+                            <a class="btn btn-xs btn-primary" @click="attach(category.id)" title="link this category"><i class="fa fa-link"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination :table="detached"></pagination>
+            </template>
         </div>
-        <div v-else>
-            <p style="font-style: italic;">No categories are currently linked to this item.</p>
+        <div class="col-md-12">
+            <hr/>
+            <h4>Category List</h4>
+            <div v-if="table.items.length">
+                <p class="help-block">The following categories are linked to this item.</p>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="category in table.items">
+                        <td>{{ category.full_name }}</td>
+                        <td class="text-right">
+                            <a class="btn btn-xs btn-danger" @click="table.destroy(category.id)" title="unlink this category"><i class="fa fa-unlink"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination></pagination>
+            </div>
+            <div v-else>
+                <p style="font-style: italic;">No categories are currently linked to this item.</p>
+            </div>
         </div>
     </div>
 </div>
