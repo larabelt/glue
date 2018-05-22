@@ -35,6 +35,11 @@ class BeltGlueServiceProvider extends ServiceProvider
         include __DIR__ . '/../routes/admin.php';
         include __DIR__ . '/../routes/api.php';
         include __DIR__ . '/../routes/web.php';
+
+        # beltable values for global belt command
+        $this->app['belt']->addPackage('glue', ['dir' => __DIR__ . '/..']);
+        $this->app['belt']->publish('belt-glue:publish');
+        $this->app['belt']->seeders('BeltGlueSeeder');
     }
 
     /**
@@ -49,6 +54,9 @@ class BeltGlueServiceProvider extends ServiceProvider
 
         // set backup view paths
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'belt-glue');
+
+        // set backup translation paths
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'belt-glue');
 
         // policies
         $this->registerPolicies($gate);
@@ -69,10 +77,6 @@ class BeltGlueServiceProvider extends ServiceProvider
         $router->model('tag', Belt\Glue\Tag::class, function ($value) {
             return Belt\Glue\Tag::sluggish($value)->firstOrFail();
         });
-
-        # beltable values for global belt command
-        $this->app['belt']->publish('belt-glue:publish');
-        $this->app['belt']->seeders('BeltGlueSeeder');
     }
 
     /**
