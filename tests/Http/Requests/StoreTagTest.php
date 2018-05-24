@@ -2,7 +2,7 @@
 
 use Belt\Glue\Http\Requests\StoreTag;
 
-class StoreTagTest extends \PHPUnit_Framework_TestCase
+class StoreTagTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

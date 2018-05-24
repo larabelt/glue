@@ -2,7 +2,7 @@
 
 use Belt\Glue\Http\Requests\UpdateTag;
 
-class UpdateTagTest extends \PHPUnit_Framework_TestCase
+class UpdateTagTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

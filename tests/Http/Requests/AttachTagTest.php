@@ -2,7 +2,7 @@
 
 use Belt\Glue\Http\Requests\AttachTag;
 
-class AttachTagTest extends \PHPUnit_Framework_TestCase
+class AttachTagTest extends \PHPUnit\Framework\TestCase
 {
 
     /**
