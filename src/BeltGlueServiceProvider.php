@@ -77,6 +77,14 @@ class BeltGlueServiceProvider extends ServiceProvider
         $router->model('tag', Belt\Glue\Tag::class, function ($value) {
             return Belt\Glue\Tag::sluggish($value)->firstOrFail();
         });
+
+        # beltable values for global belt command
+        $this->app['belt']->publish('belt-glue:publish');
+        $this->app['belt']->seeders('BeltGlueSeeder');
+
+        // access map for window config
+        Belt\Core\Services\AccessService::put('*', 'categories');
+        Belt\Core\Services\AccessService::put('*', 'tags');
     }
 
     /**
