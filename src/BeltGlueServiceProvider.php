@@ -73,6 +73,10 @@ class BeltGlueServiceProvider extends ServiceProvider
         # beltable values for global belt command
         $this->app['belt']->publish('belt-glue:publish');
         $this->app['belt']->seeders('BeltGlueSeeder');
+
+        // access map for window config
+        Belt\Core\Services\AccessService::put('*', 'categories');
+        Belt\Core\Services\AccessService::put('*', 'tags');
     }
 
     /**
